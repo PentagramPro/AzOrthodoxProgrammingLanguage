@@ -1,0 +1,74 @@
+name: Выпуск
+
+# Релиз собирается, когда в репозиторий приходит тег-версия: 1.0, 2.1, 2.1.3 (можно с «v»: v2.1).
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Версия для пробной сборки (без публикации релиза)"
+        required: true
+        default: "0.0"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Версия из тега
+        id: ver
+        run: |
+          $v = if ("${{ github.event_name }}" -eq "push") { "${{ github.ref_name }}".TrimStart('v') } else { "${{ inputs.version }}" }
+          "version=$v" >> $env:GITHUB_OUTPUT
+          Write-Host "Версия: $v"
+
+      - name: Испытания, сборка, руководство, архив
+        id: pkg
+        run: ./build/package.ps1 -Version ${{ steps.ver.outputs.version }}
+
+      - name: Сохранить архив как артефакт
+        uses: actions/upload-artifact@v4
+        with:
+          name: Az-${{ steps.ver.outputs.version }}-win-x64
+          path: |
+            dist/*.zip
+            dist/*.sha256
+
+      - name: Опубликовать релиз
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $v = "${{ steps.ver.outputs.version }}"
+          $notes = @"
+          ## ☦ А҆́зъ $v
+
+          Скачайте **Az-$v-win-x64.zip**, распакуйте и запустите ``Skriptorij.exe``. Ничего устанавливать не нужно.
+
+          - ``Skriptorij.exe`` — среда разработки «Скрипторїй»
+          - ``az.exe`` — транслятор для командной строки
+          - ``docs/Азъ — руководство.pdf`` — руководство программиста
+          - ``examples/`` — пример проекта «Адонаи»
+
+          Нужна Windows 10 или 11 (x64).
+
+          > Проект исследовательско-развлекательный: его цель — привлечь внимание к русской культуре и древнерусской письменности. Авторы против оскорблений по религиозным и любым другим признакам. Лицензия — PolyForm Noncommercial 1.0.0; собранные вами программы можно использовать без ограничений.
+          "@
+          gh release create "${{ github.ref_name }}" dist/*.zip dist/*.sha256 `
+            --title "А҆́зъ $v" --notes $notes --generate-notes --verify-tag

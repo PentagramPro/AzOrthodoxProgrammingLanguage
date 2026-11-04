@@ -1,0 +1,10 @@
+<Project>
+  <!-- Общія свойства всѣхъ проектовъ. Версію при выпускѣ подставляетъ CI изъ тега: -p:Version=2.1 -->
+  <PropertyGroup>
+    <Version Condition="'$(Version)' == ''">2.0</Version>
+    <Product>Азъ</Product>
+    <Authors>Проектъ «Азъ»</Authors>
+    <Copyright>Слава Богу за всё</Copyright>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+</Project>

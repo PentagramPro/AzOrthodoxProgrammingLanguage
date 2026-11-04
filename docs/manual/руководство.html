@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Азъ — руководство программиста</title>
+<meta name="author" content="Проект «Азъ»">
+<style>
+<!--CSS-->
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ ОБЛОЖКА ═══════════════════════════ -->
+<section class="cover">
+  <svg class="frame" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="orn" width="8" height="8" patternUnits="userSpaceOnUse">
+        <path d="M4 0 L8 4 L4 8 L0 4 Z" fill="none" stroke="#b8892a" stroke-width=".35"/>
+        <circle cx="4" cy="4" r=".7" fill="#b3261e"/>
+      </pattern>
+    </defs>
+    <rect x="9" y="9" width="192" height="279" fill="none" stroke="#7a2a17" stroke-width="1.6"/>
+    <rect x="12" y="12" width="186" height="273" fill="none" stroke="#b8892a" stroke-width=".5"/>
+    <rect x="13.5" y="13.5" width="183" height="8" fill="url(#orn)"/>
+    <rect x="13.5" y="275.5" width="183" height="8" fill="url(#orn)"/>
+    <rect x="15" y="15" width="180" height="267" fill="none" stroke="#b8892a" stroke-width=".25"/>
+    <g fill="#b3261e">
+      <circle cx="12" cy="12" r="2.2"/><circle cx="198" cy="12" r="2.2"/><circle cx="12" cy="285" r="2.2"/><circle cx="198" cy="285" r="2.2"/>
+    </g>
+  </svg>
+  <div class="inner">
+    <div class="kicker">Православный язык программирования</div>
+    <div class="title">А҆́зъ</div>
+    <div class="sub">Руково́дство программи́ста</div>
+    <div class="sub2">с примерами, справочником и шпаргалкой · версия {{VERSION}}</div>
+    <svg class="cross" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#b8892a" stroke="#7a2a17" stroke-width=".8">
+        <rect x="26" y="2" width="8" height="86" rx="1"/>
+        <rect x="18" y="12" width="24" height="5" rx="1"/>
+        <rect x="6" y="26" width="48" height="7" rx="1"/>
+        <rect x="14" y="62" width="32" height="5" rx="1" transform="rotate(-22 30 64.5)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="bottom"><b>Скрипторїй</b><br>{{YEAR}}</div>
+</section>
+
+<!-- ═══════════════════════════ ТИТУЛЬНЫЯ ═══════════════════════════ -->
+<section class="front">
+  <div class="epigraph">
+    <span class="cs">Въ нача́лѣ бѣ̀ сло́во.</span>
+    В начале было Слово — и только потом компилятор.
+    <span class="src">Ин. 1:1, вольное продолжение</span>
+  </div>
+
+  <h2 id="notoc-about" style="margin-top:0">О руководстве</h2>
+  <p>Это руководство описывает язык <span class="cs">А҆́зъ</span> версии {{VERSION}}: его письмо, лексику, виды значений,
+  управляющие конструкции, функции и встроенные действия, а также инструменты — транслятор <code>az</code>
+  и среду разработки «Скрипторїй». Первые главы читаются по порядку, как учебник. Последние главы и приложения
+  служат справочником.</p>
+  <p>Язык родился из шуточной картинки, на которой была изображена «православная среда разработки».
+  Шутка оказалась удачной, и язык получился настоящим: каждая программа из этого руководства компилируется
+  в обычный исполняемый файл Windows. Более того, все примеры, рядом с которыми напечатан их вывод,
+  действительно были собраны и запущены при вёрстке этого документа. Вывод взят из настоящего запуска,
+  а не набран вручную.</p>
+
+  <h3>Условные обозначения</h3>
+  <pre class="az" title="пример.азъ"># Так выглядит программа на «Азѣ»: номера строк слева,
+# подсветка — как в «Скрипторїи».
+глаго́ли «Ми́ръ всѣ̑мъ!»</pre>
+  <p>Если пример запускался, под ним напечатан его <em>исход</em> — то, что программа вывела на экран:</p>
+  <pre class="az" title="исход.азъ" run>глаго́ли «Ми́ръ всѣ̑мъ!»</pre>
+  <div class="note"><span class="h">Замечание</span><p>Так оформлены пояснения и подробности, которые можно пропустить при первом чтении.</p></div>
+  <div class="warn"><span class="h">Внимание</span><p>Так — места, где легко ошибиться.</p></div>
+  <div class="tip"><span class="h">Совет</span><p>Так — практические советы.</p></div>
+
+  <div class="imprint" style="margin-top:10mm">
+    <p><b>А҆́зъ</b> — руководство программиста. Версия языка {{VERSION}}, {{YEAR}} г.</p>
+    <p>Набрано шрифтами Cambria и «Пономарь» (Ponomar, Slavonic Computing Initiative, SIL Open Font License).
+    Изображения икон — Викисклад, общественное достояние.</p>
+  </div>
+</section>
+
+<section class="front">
+  <h1 class="toc-title" id="notoc-toc">Оглавле́нїе</h1>
+  <!--TOC-->
+</section>
+
+<!-- ═══════════════════════════ 1. ВВЕДЕНИЕ ═══════════════════════════ -->
+<h1 class="chapter" id="ch1" data-num="1"><span class="no">Глава 1 <span class="cs">а҃</span></span>Введение</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead"><span class="cs">А҆́зъ</span> — компилируемый язык программирования с церковнославянскими ключевыми словами.
+По устройству он похож на Python: блоки выделяются отступами, после заголовка блока ставится двоеточие,
+типы значений определяются во время выполнения. По облику это язык богослужебных книг: <span class="cs">а҆́ще</span>
+вместо <code>if</code>, <span class="cs">поку́да</span> вместо <code>while</code>, <span class="cs">глаго́ли</span> вместо <code>print</code>
+и числа, записанные буквами под титлом.</p>
+<p>Название языка — первая буква кириллической азбуки, <span class="cs">а҆́зъ</span>. С неё начинается всякое учение,
+а файлы с исходным текстом носят расширение <code>.азъ</code>.</p>
+
+<h2 id="ch1-1" data-num="1.1"><span class="n">1.1</span>Как устроен язык</h2>
+<p>Программа на «Азѣ» не интерпретируется. Транслятор <code>az</code> разбирает исходный текст, строит дерево программы
+и порождает по нему текст на языке C#. Затем компилятор <code>csc.exe</code>, который входит в состав
+.NET Framework и есть в каждой Windows 10 и 11, превращает этот текст в исполняемый файл.</p>
+
+<figure class="fig">
+<svg viewBox="0 0 680 168" width="170mm" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI" font-size="11">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7a5a3a"/></marker>
+    <linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#f3e6c4"/></linearGradient>
+    <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c4382e"/><stop offset="1" stop-color="#9b1f18"/></linearGradient>
+  </defs>
+  <rect x="2" y="44" width="92" height="56" rx="6" fill="url(#gr)"/>
+  <text x="48" y="70" text-anchor="middle" fill="#fff" font-family="Ponomar" font-size="16">вѣ́ды.азъ</text>
+  <text x="48" y="88" text-anchor="middle" fill="#ffe3c9" font-size="9.5">исходный текст</text>
+  <g fill="url(#gb)" stroke="#b8892a" stroke-width="1.2">
+    <rect x="122" y="44" width="92" height="56" rx="6"/><rect x="242" y="44" width="92" height="56" rx="6"/>
+    <rect x="362" y="44" width="104" height="56" rx="6"/><rect x="494" y="44" width="80" height="56" rx="6"/>
+  </g>
+  <text x="168" y="69" text-anchor="middle" font-weight="600" fill="#5a1e12">Лексер</text>
+  <text x="168" y="86" text-anchor="middle" fill="#6d6257" font-size="9.5">нормализация слов</text>
+  <text x="288" y="69" text-anchor="middle" font-weight="600" fill="#5a1e12">Парсер</text>
+  <text x="288" y="86" text-anchor="middle" fill="#6d6257" font-size="9.5">дерево программы</text>
+  <text x="414" y="69" text-anchor="middle" font-weight="600" fill="#5a1e12">Генератор C#</text>
+  <text x="414" y="86" text-anchor="middle" fill="#6d6257" font-size="9.5">C# 5 + рантайм</text>
+  <text x="534" y="69" text-anchor="middle" font-weight="600" fill="#5a1e12">csc.exe</text>
+  <text x="534" y="86" text-anchor="middle" fill="#6d6257" font-size="9.5">.NET Framework</text>
+  <rect x="602" y="44" width="76" height="56" rx="6" fill="#2a1f17"/>
+  <text x="640" y="69" text-anchor="middle" fill="#f1e3c0" font-family="Ponomar" font-size="15">вѣ́ды.exe</text>
+  <text x="640" y="87" text-anchor="middle" fill="#c9a45a" font-size="9.5">≈ 20 КБ</text>
+  <g stroke="#7a5a3a" stroke-width="1.4" marker-end="url(#ar)">
+    <line x1="95" y1="72" x2="120" y2="72"/><line x1="215" y1="72" x2="240" y2="72"/><line x1="335" y1="72" x2="360" y2="72"/>
+    <line x1="467" y1="72" x2="492" y2="72"/><line x1="575" y1="72" x2="600" y2="72"/>
+  </g>
+  <path d="M122 30 H466" stroke="#b3261e" stroke-width="1" fill="none"/>
+  <path d="M122 26 V34 M466 26 V34" stroke="#b3261e" stroke-width="1"/>
+  <text x="294" y="20" text-anchor="middle" fill="#b3261e" font-size="10.5" font-weight="600">транслятор az (C#, .NET 10)</text>
+  <path d="M494 116 H574" stroke="#1a3cc8" stroke-width="1"/><path d="M494 112 V120 M574 112 V120" stroke="#1a3cc8" stroke-width="1"/>
+  <text x="534" y="134" text-anchor="middle" fill="#1a3cc8" font-size="10">уже есть в Windows</text>
+  <text x="168" y="124" text-anchor="middle" fill="#8a7d6f" font-size="9.5">слова → токены</text>
+  <text x="288" y="124" text-anchor="middle" fill="#8a7d6f" font-size="9.5">токены → дерево</text>
+  <text x="414" y="124" text-anchor="middle" fill="#8a7d6f" font-size="9.5">дерево → текст C#</text>
+  <text x="340" y="160" text-anchor="middle" fill="#6d6257" font-size="10" font-style="italic">Ошибки в тексте программы («прегрешения») обнаруживаются на первых трёх стадиях — ещё до компиляции.</text>
+</svg>
+<figcaption><b>Рис. 1</b> Путь программы от исходного текста до исполняемого файла</figcaption>
+</figure>
+
+<p>Получившийся <code>.exe</code> ни от чего не зависит: его можно переписать на другой компьютер с Windows
+и запустить без установки «Аза». Память в программах освобождает сборщик мусора .NET, а ошибки выполнения
+сообщаются понятным текстом с номером строки исходника.</p>
+
+<h2 id="ch1-2" data-num="1.2"><span class="n">1.2</span>Состав и установка</h2>
+<table>
+<thead><tr><th style="width:32%">Составная часть</th><th>Назначение</th></tr></thead>
+<tbody>
+<tr><td><code>az.exe</code></td><td>Транслятор командной строки: собирает, запускает и проверяет программы.</td></tr>
+<tr><td><code>Skriptorij.exe</code></td><td>Среда разработки «Скрипторїй»: редактор с подсветкой, проверкой на лету, запуском и иконостасом.</td></tr>
+<tr><td><code>examples\Адонаи\</code></td><td>Пример проекта: пасхалия, родословие, «трисвятое», урок со всеми возможностями.</td></tr>
+<tr><td><code>docs\</code></td><td>Документация, в том числе это руководство.</td></tr>
+</tbody>
+</table>
+<p>Для <em>сборки инструментов</em> нужен .NET 10 SDK. Для <em>сборки программ на «Азѣ»</em> ничего, кроме Windows, не нужно.
+Чтобы собрать инструменты, запустите в корне проекта:</p>
+<pre class="plain"><span class="p">&gt;</span> собрать.cmd
+Собрано въ C:\…\bin. Слава Богу!</pre>
+<p>После этого в папке <code>bin</code> появятся <code>az.exe</code> и <code>Skriptorij.exe</code>.
+Сценарии <code>az.cmd</code> и <code>скрипторий.cmd</code> в корне проекта при первом запуске сами вызывают сборку.</p>
+
+<div class="note"><span class="h">Замечание</span><p>Компилятор <code>csc.exe</code> ищется в <code>%WINDIR%\Microsoft.NET\Framework64\v4.0.30319</code>.
+Если он лежит в другом месте, укажите путь в переменной окружения <code>AZ_CSC</code>.</p></div>
+
+<!-- ═══════════════════════════ 2. ПЕРВАЯ ПРОГРАММА ═══════════════════════════ -->
+<h1 class="chapter" id="ch2" data-num="2"><span class="no">Глава 2 <span class="cs">в҃</span></span>Первая программа</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">По доброй традиции первая программа на всяком языке приветствует мир. На «Азѣ» она состоит из одной строки.</p>
+
+<pre class="az" title="здравствꙋй_мїре.азъ" run>глаго́ли «Здра́вствꙋй, мі́ре!»</pre>
+
+<p>Слово <span class="cs">глаго́ли</span> («говори») выводит на экран значения, перечисленные через запятую, и переводит строку.
+Текст в ёлочках <span class="cs">«…»</span> — это <em>слово</em>, то есть строка.</p>
+
+<h2 id="ch2-1" data-num="2.1"><span class="n">2.1</span>Запуск из командной строки</h2>
+<p>Сохраните программу в файл <code>здравствꙋй_мїре.азъ</code> в кодировке UTF-8 и выполните:</p>
+<pre class="plain"><span class="p">&gt;</span> az пусти здравствꙋй_мїре.азъ      <span class="cm"># собрать во временную папку и сразу запустить</span>
+Здра́вствꙋй, мі́ре!
+
+<span class="p">&gt;</span> az собери здравствꙋй_мїре.азъ     <span class="cm"># положить здравствꙋй_мїре.exe рядом с исходником</span>
+Собрано: …\здравствꙋй_мїре.exe  (csc изъ .NET Framework). Слава Богу!
+
+<span class="p">&gt;</span> здравствꙋй_мїре.exe
+Здра́вствꙋй, мі́ре!</pre>
+
+<h2 id="ch2-2" data-num="2.2"><span class="n">2.2</span>Запуск из «Скрипторїя»</h2>
+<p>В среде разработки откройте файл в древе проекта и нажмите <b>Shift+F10</b> или кнопку <b>▶ Пꙋсти́ти</b>.
+Вывод программы появится в нижней панели «Исход». Если программа задаёт вопросы через <span class="cs">внемлѝ()</span>,
+заранее впишите ответы в поле «Ввод» справа, по одному в строке.</p>
+<figure class="fig">
+  <img src="{{ASSETS}}скрипторий.png" style="width:100%">
+  <figcaption><b>Рис. 2</b> «Скрипторїй»: иконостас, древо проекта, редактор с подсветкой и панель исхода после запуска</figcaption>
+</figure>
+
+<h2 id="ch2-3" data-num="2.3"><span class="n">2.3</span>Программа посложнее</h2>
+<p>Вот программа, которая спрашивает имя, отвечает на него и считает до трёх. Мы разберём каждую её строку
+в следующих главах, а пока просто прочтите её — она читается почти как обычный текст.</p>
+<pre class="az" title="привѣ́тъ.азъ" run stdin="Ѳеѡ́доръ\n">#  Спрашиваемъ имя и приветствуемъ
+и҆́мѧ є҆́сть внемлѝ(«Ка́кѡ и҆́мѧ твоѐ? »)
+а҆́ще и҆́мѧ є҆́сть «»:
+    и҆́мѧ є҆́сть «ра́бъ Бж҃їй»
+глаго́ли «Ми́ръ ти,», и҆́мѧ + «!»
+
+для ч во 3:
+    глаго́ли «Покло́нъ», кириллицею(ч)
+глаго́ли «А҆ми́нь.»</pre>
+
+<p>Здесь встречаются почти все основные понятия языка:</p>
+<ul>
+<li><b>присваивание</b> — <az>и҆́мѧ є҆́сть …</az>: переменная <span class="cs">и҆́мѧ</span> получает значение;</li>
+<li><b>встроенное действие</b> <az>внемлѝ(…)</az> — печатает вопрос и читает строку с клавиатуры;</li>
+<li><b>условие</b> <az>а҆́ще … :</az> и его <b>тело</b>, сдвинутое отступом на четыре пробела;</li>
+<li><b>цикл</b> <az>для ч во 3:</az>, который выполняет тело для <span class="cs">ч</span> = 1, 2, 3;</li>
+<li><b>кириллическая цифирь</b>: <az>кириллицею(ч)</az> записывает число буквами под титлом.</li>
+</ul>
+
+<!-- ═══════════════════════════ 3. ПИСЬМО ═══════════════════════════ -->
+<h1 class="chapter" id="ch3" data-num="3"><span class="no">Глава 3 <span class="cs">г҃</span></span>Письмо и правописание</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Программы на «Азѐ» можно писать и церковнославянской орфографией с ударениями и титлами,
+и обычной гражданской азбукой. Транслятор понимает и то и другое, потому что перед сравнением слов приводит каждое
+из них к простому виду.</p>
+
+<h2 id="ch3-1" data-num="3.1"><span class="n">3.1</span>Нормализация слов</h2>
+<p>Каждое ключевое слово и каждое имя переменной проходит через три преобразования:</p>
+<ol>
+<li>снимаются все надстрочные знаки: ударения (оксия, вария, камора), придыхания, титла;</li>
+<li>древние буквы заменяются гражданскими по таблице ниже;</li>
+<li>отбрасывается конечный <span class="cs">ъ</span>, и все буквы приводятся к строчным.</li>
+</ol>
+<table class="compact">
+<thead><tr><th>Буква</th><th>Читается как</th><th>Буква</th><th>Читается как</th><th>Буква</th><th>Читается как</th></tr></thead>
+<tbody>
+<tr><td class="cs">ѣ</td><td>е</td><td class="cs">і ї ѵ</td><td>и</td><td class="cs">ѳ</td><td>ф</td></tr>
+<tr><td class="cs">ѡ ѻ</td><td>о</td><td class="cs">ꙋ ѹ оу ѫ</td><td>у</td><td class="cs">ѧ ꙗ</td><td>я</td></tr>
+<tr><td class="cs">є</td><td>е</td><td class="cs">ѕ ꙁ</td><td>з</td><td class="cs">ѯ</td><td>кс</td></tr>
+<tr><td class="cs">ѱ</td><td>пс</td><td class="cs">ѿ</td><td>от</td><td class="cs">й ё</td><td>и, е</td></tr>
+</tbody>
+<caption>Таблица 3.1. Соответствие древних и гражданских букв при сравнении слов</caption>
+</table>
+<p>Поэтому <az>функці́ѧ</az>, <az>функція</az> и <az>функция</az> — одно и то же ключевое слово,
+а <az>Благовѣ́стъ</az> и <az>благовест</az> — одно и то же имя. Следующие три строки делают одно и то же:</p>
+<pre class="az" title="правописа́нїе.азъ" run>а҆́ще и҆сти́на: глаго́ли «по-церко́вному»
+аще истина: глаголи "по-граждански"
+АЩЕ ИСТИНА: ГЛАГОЛИ «и даже прописными»</pre>
+
+<div class="warn"><span class="h">Внимание</span><p>Нормализация касается только ключевых слов и имён. Строки в кавычках и ёлочках
+сохраняются в точности как написаны, со всеми ударениями.</p></div>
+
+<h2 id="ch3-2" data-num="3.2"><span class="n">3.2</span>Как набирать церковнославянский текст</h2>
+<p>На обычной клавиатуре нет букв <span class="cs">ѣ ѿ ѳ ꙋ</span> и надстрочных знаков. Есть три способа их набрать.</p>
+<ul>
+<li><b>Панель «Буквы» в «Скрипторїи».</b> Она находится над редактором: щелчок по кнопке вставляет букву или надстрочный знак
+в позицию курсора. Надстрочный знак ставится над буквой, стоящей перед курсором.</li>
+<li><b>Гражданская азбука.</b> Писать без древних букв вполне законно: <az>аще</az> ничем не хуже <az>а҆́ще</az>.</li>
+<li><b>Раскладка или шрифт с поддержкой Unicode</b>, например раскладки Slavonic Computing Initiative.</li>
+</ul>
+<table class="compact">
+<thead><tr><th>Знак</th><th>Название</th><th>Unicode</th><th>Где нужен</th></tr></thead>
+<tbody>
+<tr><td class="cs">◌҃</td><td>титло</td><td><code>U+0483</code></td><td>числа (<span class="cs">а҃</span>), сокращения (<span class="cs">Бг҃ъ</span>)</td></tr>
+<tr><td class="cs">҂</td><td>знак тысяч</td><td><code>U+0482</code></td><td>числа от 1000 (<span class="cs">҂вк҃ѕ</span>)</td></tr>
+<tr><td class="cs">◌́ ◌̀ ◌̑</td><td>оксия, вария, камора</td><td><code>U+0301 0300 0311</code></td><td>ударения — только для красоты</td></tr>
+<tr><td class="cs">◌҆</td><td>придыхание (звательце)</td><td><code>U+0486</code></td><td>над начальной гласной — только для красоты</td></tr>
+</tbody>
+</table>
+
+<h2 id="ch3-3" data-num="3.3"><span class="n">3.3</span>Имена</h2>
+<p>Имя переменной или функции — непрерывная последовательность букв (кириллических или латинских), цифр,
+знака подчёркивания и надстрочных знаков, начинающаяся с буквы. Регистр не различается, конечный
+<span class="cs">ъ</span> не учитывается: <az>Ро́дъ</az>, <az>род</az> и <az>РОД</az> — одно имя.</p>
+<div class="warn"><span class="h">Внимание</span><p>Ключевые слова нельзя использовать как имена. Особенно легко споткнуться
+о союз <az>и</az> и о слово <az>во</az>: назвать счётчик цикла <span class="cs">і</span> нельзя, потому что
+<span class="cs">і</span> после нормализации превращается в <span class="cs">и</span>. Берите <span class="cs">к</span>,
+<span class="cs">ч</span>, <span class="cs">кру́гъ</span>. А вот <span class="cs">а</span>, <span class="cs">б</span>, <span class="cs">в</span>
+— обычные имена, как на знаменитом меме.</p></div>
+
+<!-- ═══════════════════════════ 4. ЛЕКСИКА ═══════════════════════════ -->
+<h1 class="chapter" id="ch4" data-num="4"><span class="no">Глава 4 <span class="cs">д҃</span></span>Лексика</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Программа состоит из строк. Каждая строка — одно предложение: присваивание, вызов, вывод или заголовок блока.
+Предложение заканчивается вместе со строкой, точка с запятой не нужна. Внутри круглых, квадратных и фигурных скобок
+выражение можно переносить на следующие строки.</p>
+
+<h2 id="ch4-1" data-num="4.1"><span class="n">4.1</span>Комментарии</h2>
+<p>Всё, что следует за знаком <code>#</code> до конца строки, — комментарий; транслятор его не читает.</p>
+<pre class="az" nonum># Глаго́лѧ словеса̀ бл҃га̑ѧ — это комментарий
+х є҆́сть 5   # и это тоже</pre>
+
+<h2 id="ch4-2" data-num="4.2"><span class="n">4.2</span>Слова (строки)</h2>
+<p>Строку можно заключить в ёлочки <span class="cs">«…»</span> или в прямые кавычки <code>"…"</code>. Внутри ёлочек
+прямые кавычки не нужно экранировать, и наоборот. Строка должна закончиться на той же строке исходника.</p>
+<table class="compact">
+<thead><tr><th style="width:18%">Запись</th><th>Значение</th></tr></thead>
+<tbody>
+<tr><td><code>\n</code></td><td>перевод строки</td></tr>
+<tr><td><code>\t</code></td><td>табуляция</td></tr>
+<tr><td><code>\\</code></td><td>обратная косая черта</td></tr>
+<tr><td><code>\"</code>, <code>\«</code>, <code>\»</code></td><td>кавычка или ёлочка внутри строки</td></tr>
+</tbody>
+</table>
+
+<h2 id="ch4-3" data-num="4.3"><span class="n">4.3</span>Числа и кириллическая цифирь</h2>
+<p>Числа записываются арабскими цифрами — целые (<code>42</code>) и дробные (<code>3.14</code>, с точкой) —
+или по-древнему, буквами под титлом. В кириллической записи каждой из 27 букв приписано числовое значение;
+значение числа равно сумме значений его букв, а знак <span class="cs">҂</span> умножает следующую букву на тысячу.</p>
+<div class="keep"><div class="numgrid">
+  <div><span class="l">а</span><span class="v">1</span></div><div><span class="l">в</span><span class="v">2</span></div><div><span class="l">г</span><span class="v">3</span></div>
+  <div><span class="l">д</span><span class="v">4</span></div><div><span class="l">є</span><span class="v">5</span></div><div><span class="l">ѕ</span><span class="v">6</span></div>
+  <div><span class="l">з</span><span class="v">7</span></div><div><span class="l">и</span><span class="v">8</span></div><div><span class="l">ѳ</span><span class="v">9</span></div>
+  <div><span class="l">і</span><span class="v">10</span></div><div><span class="l">к</span><span class="v">20</span></div><div><span class="l">л</span><span class="v">30</span></div>
+  <div><span class="l">м</span><span class="v">40</span></div><div><span class="l">н</span><span class="v">50</span></div><div><span class="l">ѯ</span><span class="v">60</span></div>
+  <div><span class="l">ѻ</span><span class="v">70</span></div><div><span class="l">п</span><span class="v">80</span></div><div><span class="l">ч</span><span class="v">90</span></div>
+  <div><span class="l">р</span><span class="v">100</span></div><div><span class="l">с</span><span class="v">200</span></div><div><span class="l">т</span><span class="v">300</span></div>
+  <div><span class="l">ѵ</span><span class="v">400</span></div><div><span class="l">ф</span><span class="v">500</span></div><div><span class="l">х</span><span class="v">600</span></div>
+  <div><span class="l">ѱ</span><span class="v">700</span></div><div><span class="l">ѿ</span><span class="v">800</span></div><div><span class="l">ц</span><span class="v">900</span></div>
+</div></div>
+<p>Чтобы транслятор отличил число от имени, в записи обязательно должно стоять титло. Числа от 11 до 19 пишутся
+«наоборот», как и произносятся: <span class="cs">в҃і</span> — «два-на-десять», 12.</p>
+<pre class="az" title="цы́фирь.азъ" run>глаго́ли а҃, в҃і, к҃є, р҃ки, ҂а҃, ҂вк҃ѕ
+глаго́ли кириллицею(1453), кириллицею(988), кириллицею(7)
+глаго́ли а҃ + і҃ є҆́сть 11</pre>
+<div class="note"><span class="h">Замечание</span><p>Нуля в кириллической цифири нет. Поэтому <az>кириллицею(0)</az>
+возвращает просто <span class="cs">«0»</span>, а счёт элементов в свитках ведётся с единицы (глава 10).</p></div>
+
+<h2 id="ch4-4" data-num="4.4"><span class="n">4.4</span>Ключевые слова</h2>
+<p>Ниже перечислены все ключевые слова языка. У многих есть синонимы: можно писать так, как привычнее и благозвучнее.</p>
+<table>
+<thead><tr><th style="width:36%">Слова</th><th style="width:30%">Значение</th><th>Аналог в Python</th></tr></thead>
+<tbody>
+<tr><td><az>функція</az> · <az>дѣѧ́нїе</az> · <az>дѣ́ло</az></td><td>объявление функции</td><td><code>def</code></td></tr>
+<tr><td><az>возврати</az> · <az>возвратити</az> · <az>верни</az></td><td>возврат значения</td><td><code>return</code></td></tr>
+<tr><td><az>а҆́ще</az></td><td>условие</td><td><code>if</code></td></tr>
+<tr><td><az>и҆на́че</az> · <az>и҆на́ко</az></td><td>иначе</td><td><code>else</code>; с <span class="cs">а҆́ще</span> — <code>elif</code></td></tr>
+<tr><td><az>поку́да</az> · <az>до́колѣ</az></td><td>цикл с условием</td><td><code>while</code></td></tr>
+<tr><td><az>для</az> · <az>всѧ́ко</az> … <az>во</az></td><td>обход последовательности</td><td><code>for … in</code></td></tr>
+<tr><td><az>прерви</az> · <az>дово́льно</az></td><td>выход из цикла</td><td><code>break</code></td></tr>
+<tr><td><az>продолжи</az> · <az>па́ки</az></td><td>следующий проход</td><td><code>continue</code></td></tr>
+<tr><td><az>глаго́ли</az> · <az>рцы̀</az></td><td>вывод на экран</td><td><code>print</code></td></tr>
+<tr><td><az>є҆́сть</az> · <az>бы́сть</az> · <az>бꙋ́ди</az> · <code>=</code></td><td>присваивание</td><td><code>=</code></td></tr>
+<tr><td><az>є҆́сть</az> (в выражении)</td><td>равенство</td><td><code>==</code></td></tr>
+<tr><td><az>сꙋ́ть</az> · <az>же</az></td><td>объявление переменных</td><td>—</td></tr>
+<tr><td><az>вѧ́щше</az> · <az>бо́лѣе</az> · <az>бо́льше</az></td><td>больше</td><td><code>&gt;</code></td></tr>
+<tr><td><az>менѣ́е</az> · <az>ме́ньше</az></td><td>меньше</td><td><code>&lt;</code></td></tr>
+<tr><td><az>и</az> · <az>а҆́бо</az> / <az>и҆лѝ</az> / <az>ли́бо</az> · <az>не</az></td><td>логика</td><td><code>and</code>, <code>or</code>, <code>not</code></td></tr>
+<tr><td><az>и҆сти́на</az> · <az>пра́вда</az> · <az>А҆ми́нь</az></td><td>истина</td><td><code>True</code></td></tr>
+<tr><td><az>ло́жь</az> · <az>кри́вда</az></td><td>ложь</td><td><code>False</code></td></tr>
+<tr><td><az>безвѣ́стно</az> · <az>безвѣ́стна</az> · <az>ничто́же</az></td><td>отсутствие значения</td><td><code>None</code></td></tr>
+<tr><td><az>ѿ</az> (<span class="cs">от</span>)</td><td>взятие элемента</td><td><code>[ ]</code></td></tr>
+<tr><td><az>анаѳе́ма</az></td><td>аварийное завершение</td><td><code>raise SystemExit</code></td></tr>
+</tbody>
+</table>
+
+<h2 id="ch4-5" data-num="4.5"><span class="n">4.5</span>Знаки</h2>
+<p>Кроме слов, в языке есть привычные знаки: арифметические <code>+ - * / // %</code>, сравнения
+<code>== != &lt; &gt; &lt;= &gt;=</code>, присваивания <code>= += -=</code>, а также скобки <code>( ) [ ] { }</code>,
+запятая, двоеточие и точка.</p>
+
+<!-- ═══════════════════════════ 5. ЗНАЧЕНИЯ ═══════════════════════════ -->
+<h1 class="chapter" id="ch5" data-num="5"><span class="no">Глава 5 <span class="cs">є҃</span></span>Значения и виды</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Всякое значение в программе принадлежит к одному из семи видов. Вид определяется во время выполнения,
+и одна и та же переменная может в разное время хранить значения разных видов.</p>
+<table>
+<thead><tr><th style="width:19%">Вид</th><th style="width:31%">Примеры</th><th>Что это</th></tr></thead>
+<tbody>
+<tr><td class="cs">цѣ́лое</td><td><az>7</az>, <az>з҃</az>, <az>-12</az></td><td>целое число (64 бита)</td></tr>
+<tr><td class="cs">дро́бное</td><td><az>2.5</az>, <az>7 / 2</az></td><td>число с плавающей точкой</td></tr>
+<tr><td class="cs">сло́во</td><td><az>«Ми́ръ»</az>, <az>"текст"</az></td><td>строка Unicode</td></tr>
+<tr><td class="cs">и҆́стинность</td><td><az>и҆сти́на</az>, <az>ло́жь</az></td><td>логическое значение</td></tr>
+<tr><td class="cs">сви́токъ</td><td><az>[1, 2, 3]</az></td><td>список, нумерация с единицы</td></tr>
+<tr><td class="cs">словни́къ</td><td><az>{«а»: 1}</az></td><td>словарь (ключ → значение)</td></tr>
+<tr><td class="cs">безвѣ́стно</td><td><az>безвѣ́стно</az></td><td>«ничего», отсутствие значения</td></tr>
+</tbody>
+</table>
+<p>Название вида любого значения возвращает действие <az>вид()</az>:</p>
+<pre class="az" title="ви́ды.азъ" run>глаго́ли вид(1), вид(1.5), вид(«а҆́зъ»)
+глаго́ли вид(и҆сти́на), вид([]), вид({}), вид(безвѣ́стно)</pre>
+
+<h2 id="ch5-1" data-num="5.1"><span class="n">5.1</span>Истинность</h2>
+<p>Условие в <span class="cs">а҆́ще</span> и <span class="cs">поку́да</span> может быть значением любого вида.
+<em>Ложными</em> считаются: <az>ло́жь</az>, <az>безвѣ́стно</az>, число 0, пустое слово <az>«»</az>,
+пустой свиток <az>[]</az> и пустой словник <az>{}</az>. Все прочие значения <em>истинны</em>.</p>
+<pre class="az" title="и҆́стинность.азъ" run>для х во [0, 7, «», «а҆́зъ», [], [1], безвѣ́стно]:
+    а҆́ще х: глаго́ли х, «— и҆́стинно»
+    и҆на́че: глаго́ли х, «— ло́жно»</pre>
+
+<h2 id="ch5-2" data-num="5.2"><span class="n">5.2</span>Преобразования</h2>
+<table class="compact">
+<thead><tr><th style="width:28%">Действие</th><th>Результат</th></tr></thead>
+<tbody>
+<tr><td><az>число(х)</az></td><td>целое: из слова (<span class="cs">«42»</span> → 42), из дробного (отбрасывает дробную часть)</td></tr>
+<tr><td><az>дробь(х)</az></td><td>дробное число</td></tr>
+<tr><td><az>сло́во(х)</az></td><td>слово — так, как <span class="cs">глаго́ли</span> напечатал бы значение</td></tr>
+<tr><td><az>кириллицею(н)</az></td><td>слово с числом, записанным кириллической цифирью</td></tr>
+</tbody>
+</table>
+
+<!-- ═══════════════════════════ 6. ПЕРЕМЕННЫЕ ═══════════════════════════ -->
+<h1 class="chapter" id="ch6" data-num="6"><span class="no">Глава 6 <span class="cs">ѕ҃</span></span>Переменные</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Переменная появляется в тот момент, когда ей впервые присваивают значение. Присваивание записывается
+словом <span class="cs">є҆́сть</span> в начале предложения: «а есть пять». Вместо него можно писать
+<span class="cs">бы́сть</span>, <span class="cs">бꙋ́ди</span> или знак <code>=</code>.</p>
+
+<pre class="az" title="перемѣ́нныѧ.азъ" run>а є҆́сть 5
+б бы́сть а * 2
+в = б - 1
+а += 10         # то же, что «а є҆́сть а + 10»
+в -= 1
+глаго́ли а, б, в</pre>
+
+<h2 id="ch6-1" data-num="6.1"><span class="n">6.1</span>Объявление с видом</h2>
+<p>Переменные можно объявить заранее, указав вид. Объявленная переменная получает «пустое» значение своего вида:
+0, 0.0, <az>«»</az>, <az>ло́жь</az>, <az>[]</az> или <az>{}</az>. Несколько переменных объявляются словом
+<span class="cs">сꙋ́ть</span>, одна — словом <span class="cs">же</span>:</p>
+<pre class="az" title="ѡ҆бъѧвле́нїе.азъ" run>а, б, в сꙋ́ть цѣ̑лыѧ
+и҆́мѧ же сло́во
+славосло́въ же словни́къ
+свѣ́чи же сви́токъ
+глаго́ли а, б, в, «[» + и҆́мѧ + «]», славосло́въ, свѣ́чи</pre>
+<table class="compact">
+<thead><tr><th style="width:24%">Вид</th><th>Слова, которыми его можно назвать</th></tr></thead>
+<tbody>
+<tr><td>целое</td><td class="cs">цѣ́лое, цѣ̑лыѧ, цѣ́лый, цѣ́лыѧ</td></tr>
+<tr><td>дробное</td><td class="cs">дро́бное, дро́бныѧ, дробь</td></tr>
+<tr><td>слово</td><td class="cs">сло́во, словеса̀, строка̀, глаго́лъ</td></tr>
+<tr><td>словник</td><td class="cs">словни́къ, словни́ки, слова́рь</td></tr>
+<tr><td>свиток</td><td class="cs">сви́токъ, сви́тки, спи́сокъ</td></tr>
+<tr><td>истинность</td><td class="cs">и҆́стинность</td></tr>
+</tbody>
+</table>
+
+<h2 id="ch6-2" data-num="6.2"><span class="n">6.2</span>Общие и местные переменные</h2>
+<p>Переменные, которым что-либо присваивается в главном теле программы (вне функций), — <em>общие</em>: они видны
+и в главном теле, и внутри всех функций. Переменные, которые появляются только внутри функции, — <em>местные</em>:
+они создаются заново при каждом вызове и не видны снаружи.</p>
+<figure class="fig">
+<svg viewBox="0 0 600 150" width="150mm" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI" font-size="11">
+  <rect x="4" y="4" width="592" height="142" rx="8" fill="#fbf4e2" stroke="#b8892a" stroke-width="1.2"/>
+  <text x="18" y="24" fill="#8b6a3a" font-weight="600" font-size="10.5" letter-spacing="1.5">ГЛАВНОЕ ТЕЛО ПРОГРАММЫ</text>
+  <text x="18" y="50" font-family="Ponomar" font-size="15" fill="#14256b">счётъ є҆́сть 0</text>
+  <text x="18" y="72" font-family="Ponomar" font-size="15" fill="#14256b">Поклонъ(3)</text>
+  <text x="18" y="112" fill="#6d6257" font-size="10">общие: <tspan font-family="Ponomar" font-size="13" fill="#b3261e">счётъ</tspan></text>
+  <rect x="250" y="32" width="330" height="100" rx="7" fill="#fff" stroke="#b3261e" stroke-width="1.1"/>
+  <text x="264" y="50" fill="#b3261e" font-weight="600" font-size="10.5" letter-spacing="1.5">ФУНКЦИЯ ПОКЛОНЪ(Н)</text>
+  <text x="264" y="74" font-family="Ponomar" font-size="15" fill="#14256b">к є҆́сть н * 2       <tspan fill="#8a8a8a" font-size="12"># местная</tspan></text>
+  <text x="264" y="96" font-family="Ponomar" font-size="15" fill="#14256b">счётъ є҆́сть счётъ + к  <tspan fill="#8a8a8a" font-size="12"># общая</tspan></text>
+  <text x="264" y="121" fill="#6d6257" font-size="10">местные: <tspan font-family="Ponomar" font-size="13" fill="#1a7d2a">н, к</tspan> — живут только во время вызова</text>
+  <path d="M120 106 C 190 106, 200 92, 262 92" stroke="#b3261e" stroke-width="1" fill="none" stroke-dasharray="3 2"/>
+</svg>
+<figcaption><b>Рис. 3</b> Общая переменная <span class="cs">счётъ</span> доступна внутри функции; местные <span class="cs">н</span> и <span class="cs">к</span> — нет снаружи</figcaption>
+</figure>
+<pre class="az" title="ѡ҆́бласть.азъ" run>счётъ є҆́сть 0
+функці́ѧ Покло́нъ (н):
+    к є҆́сть н * 2
+    счётъ є҆́сть счётъ + к
+Покло́нъ(3)
+Покло́нъ(5)
+глаго́ли «Всегѡ̀ покло́нѡвъ:», счётъ</pre>
+<div class="warn"><span class="h">Внимание</span><p>Если внутри функции присвоить значение имени, которое уже используется как общее,
+изменится именно общая переменная. Давайте местным переменным имена, не совпадающие с общими.</p></div>
+
+<!-- ═══════════════════════════ 7. ВЫРАЖЕНИЯ ═══════════════════════════ -->
+<h1 class="chapter" id="ch7" data-num="7"><span class="no">Глава 7 <span class="cs">з҃</span></span>Выражения</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Выражение вычисляет значение. Выражения строятся из значений, имён, вызовов и знаков и вычисляются
+слева направо с учётом старшинства действий.</p>
+
+<h2 id="ch7-1" data-num="7.1"><span class="n">7.1</span>Арифметика</h2>
+<table class="compact">
+<thead><tr><th style="width:14%">Знак</th><th style="width:30%">Действие</th><th>Особенности</th></tr></thead>
+<tbody>
+<tr><td><code>+</code></td><td>сложение</td><td>со словом — склеивание: <az>«Лѣ́то » + 2026</az></td></tr>
+<tr><td><code>-</code></td><td>вычитание, смена знака</td><td></td></tr>
+<tr><td><code>*</code></td><td>умножение</td><td>слово × число — повторение: <az>«ѡ҆ » * 3</az></td></tr>
+<tr><td><code>/</code></td><td>деление</td><td>целое, если делится нацело, иначе дробное</td></tr>
+<tr><td><code>//</code></td><td>целочисленное деление</td><td>с округлением вниз</td></tr>
+<tr><td><code>%</code></td><td>остаток</td><td>знак остатка совпадает со знаком делителя</td></tr>
+</tbody>
+</table>
+<pre class="az" title="а҆ріѳме́тика.азъ" run>глаго́ли 7 / 2, 8 / 2, 7 // 2, -7 // 2, 7 % 3, -7 % 3
+глаго́ли «Лѣ́то » + 2026, «Аллилꙋ́їа » * 3
+глаго́ли [1, 2] + [3], корень(16), мерило(-5)</pre>
+<div class="warn"><span class="h">Внимание</span><p>Деление на нуль приводит к анафеме — аварийному завершению программы
+(глава 12): <em>«дѣленіе на нуль, егоже несть въ кириллической цыфири»</em>.</p></div>
+
+<h2 id="ch7-2" data-num="7.2"><span class="n">7.2</span>Сравнения</h2>
+<p>Сравнивать можно словами или знаками. Слово <span class="cs">є҆́сть</span> внутри выражения означает равенство,
+<span class="cs">не</span> обращает сравнение. Перед <span class="cs">вѧ́щше</span> и <span class="cs">менѣ́е</span> слово
+<span class="cs">є҆́сть</span> можно ставить или опускать — смысл не меняется.</p>
+<table class="compact">
+<thead><tr><th style="width:40%">Словами</th><th style="width:18%">Знаком</th><th>Смысл</th></tr></thead>
+<tbody>
+<tr><td><az>х є҆́сть у</az></td><td><code>х == у</code></td><td>равно</td></tr>
+<tr><td><az>х не є҆́сть у</az></td><td><code>х != у</code></td><td>не равно</td></tr>
+<tr><td><az>х вѧ́щше у</az> · <az>х є҆́сть вѧ́щше у</az></td><td><code>х &gt; у</code></td><td>больше</td></tr>
+<tr><td><az>х менѣ́е у</az></td><td><code>х &lt; у</code></td><td>меньше</td></tr>
+<tr><td><az>х не вѧ́щше у</az> · <az>х не є҆́сть вѧ́щше у</az></td><td><code>х &lt;= у</code></td><td>не больше</td></tr>
+<tr><td><az>х не менѣ́е у</az></td><td><code>х &gt;= у</code></td><td>не меньше</td></tr>
+</tbody>
+</table>
+<p>Числа сравниваются по величине (целое 2 равно дробному 2.0), слова — по алфавиту, свитки равны,
+если поэлементно равны их элементы.</p>
+
+<h2 id="ch7-3" data-num="7.3"><span class="n">7.3</span>Логика</h2>
+<p>Союзы <span class="cs">и</span>, <span class="cs">а҆́бо</span> (или <span class="cs">и҆лѝ</span>, <span class="cs">ли́бо</span>)
+и частица <span class="cs">не</span> соединяют условия. Результат всегда <az>и҆сти́на</az> или <az>ло́жь</az>.</p>
+<pre class="az" title="ло́гика.азъ" run>лѣ́то є҆́сть 2026
+посто́мъ є҆́сть ло́жь
+глаго́ли лѣ́то вѧ́щше 2000 и не посто́мъ
+глаго́ли лѣ́то менѣ́е 1000 а҆́бо посто́мъ</pre>
+
+<h2 id="ch7-4" data-num="7.4"><span class="n">7.4</span>Старшинство действий</h2>
+<table class="compact">
+<thead><tr><th style="width:10%">Ранг</th><th style="width:40%">Действия</th><th>Пример</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>вызов <code>ф()</code>, указание <span class="cs">ѿ</span>, <code>[ ]</code>, точка</td><td><az>сви́токъ ѿ а҃</az></td></tr>
+<tr><td>2</td><td>унарный минус</td><td><code>-х</code></td></tr>
+<tr><td>3</td><td><code>* / // %</code></td><td><code>а * б % 7</code></td></tr>
+<tr><td>4</td><td><code>+ -</code></td><td><code>а + б - в</code></td></tr>
+<tr><td>5</td><td>сравнения</td><td><az>а вѧ́щше б</az></td></tr>
+<tr><td>6</td><td><span class="cs">не</span></td><td><az>не а</az></td></tr>
+<tr><td>7</td><td><span class="cs">и</span></td><td><az>а и б</az></td></tr>
+<tr><td>8 (последнее)</td><td><span class="cs">а҆́бо</span>, <span class="cs">и҆лѝ</span>, <span class="cs">ли́бо</span></td><td><az>а а҆́бо б</az></td></tr>
+</tbody>
+</table>
+<div class="tip"><span class="h">Совет</span><p>Указание <span class="cs">ѿ</span> связывает теснее всего, поэтому
+<az>с ѿ к + 1</az> означает «(элемент <span class="cs">к</span>) плюс один». Если нужен элемент с номером
+<span class="cs">к + 1</span>, поставьте скобки: <az>с ѿ (к + 1)</az>.</p></div>
+
+<!-- ═══════════════════════════ 8. УПРАВЛЕНИЕ ═══════════════════════════ -->
+<h1 class="chapter" id="ch8" data-num="8"><span class="no">Глава 8 <span class="cs">и҃</span></span>Управляющие конструкции</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Блок — это заголовок, оканчивающийся двоеточием, и тело: одна или несколько строк, сдвинутых вправо
+на одинаковый отступ (принято четыре пробела). Тело заканчивается там, где отступ возвращается назад.</p>
+
+<h2 id="ch8-1" data-num="8.1"><span class="n">8.1</span>Условие: <span class="cs">а҆́ще</span> — <span class="cs">и҆на́че</span></h2>
+<p>Условие проверяет выражение и выполняет тело, только если оно истинно. Ветвей <span class="cs">и҆на́че а҆́ще</span>
+может быть сколько угодно; последняя ветвь <span class="cs">и҆на́че</span> выполняется, когда не подошла ни одна из прежних.</p>
+<figure class="fig">
+<svg viewBox="0 0 640 210" width="160mm" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI" font-size="11">
+  <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7a5a3a"/></marker></defs>
+  <g font-family="Ponomar" font-size="14">
+    <polygon points="90,20 160,55 90,90 20,55" fill="#fff6dc" stroke="#b8892a" stroke-width="1.2"/>
+    <text x="90" y="52" text-anchor="middle" fill="#000080">а҆́ще</text><text x="90" y="68" text-anchor="middle" fill="#14256b" font-size="12">условие₁</text>
+    <polygon points="290,20 360,55 290,90 220,55" fill="#fff6dc" stroke="#b8892a" stroke-width="1.2"/>
+    <text x="290" y="47" text-anchor="middle" fill="#000080" font-size="12">и҆на́че а҆́ще</text><text x="290" y="66" text-anchor="middle" fill="#14256b" font-size="12">условие₂</text>
+  </g>
+  <g fill="#fbf4e2" stroke="#7a5a3a" stroke-width="1"><rect x="40" y="122" width="100" height="34" rx="5"/><rect x="240" y="122" width="100" height="34" rx="5"/><rect x="430" y="38" width="100" height="34" rx="5"/></g>
+  <text x="90" y="144" text-anchor="middle">тело₁</text><text x="290" y="144" text-anchor="middle">тело₂</text>
+  <text x="480" y="52" text-anchor="middle" font-family="Ponomar" font-size="13" fill="#000080">и҆на́че</text><text x="480" y="66" text-anchor="middle" font-size="10">тело₃</text>
+  <g stroke="#7a5a3a" stroke-width="1.3" fill="none" marker-end="url(#a2)">
+    <line x1="90" y1="90" x2="90" y2="120"/><line x1="160" y1="55" x2="218" y2="55"/>
+    <line x1="290" y1="90" x2="290" y2="120"/><line x1="360" y1="55" x2="428" y2="55"/>
+    <path d="M90 156 V186 H588"/><path d="M290 156 V186"/><path d="M530 55 H560 V186"/>
+  </g>
+  <text x="98" y="108" fill="#1a7d2a" font-size="10">да</text><text x="176" y="49" fill="#b3261e" font-size="10">нет</text>
+  <text x="298" y="108" fill="#1a7d2a" font-size="10">да</text><text x="376" y="49" fill="#b3261e" font-size="10">нет</text>
+  <circle cx="600" cy="186" r="9" fill="#2a1f17"/><text x="600" y="190" text-anchor="middle" fill="#f1e3c0" font-size="9">далее</text>
+</svg>
+<figcaption><b>Рис. 4</b> Выполняется ровно одна ветвь: первая, чьё условие истинно, или ветвь <span class="cs">и҆на́че</span></figcaption>
+</figure>
+<pre class="az" title="мѣ́сѧцъ.азъ" run>для мѣ́сѧцъ во [1, 4, 7, 12]:
+    а҆́ще мѣ́сѧцъ не вѧ́щше 2 а҆́бо мѣ́сѧцъ є҆́сть 12:
+        глаго́ли мѣ́сѧцъ, «— зима̀»
+    и҆на́че а҆́ще мѣ́сѧцъ не вѧ́щше 5:
+        глаго́ли мѣ́сѧцъ, «— весна̀»
+    и҆на́че а҆́ще мѣ́сѧцъ не вѧ́щше 8:
+        глаго́ли мѣ́сѧцъ, «— лѣ́то»
+    и҆на́че:
+        глаго́ли мѣ́сѧцъ, «— ѻ҆́сень»</pre>
+
+<h2 id="ch8-2" data-num="8.2"><span class="n">8.2</span>Цикл с условием: <span class="cs">поку́да</span></h2>
+<p>Тело цикла <span class="cs">поку́да</span> повторяется, пока условие истинно. Условие проверяется перед каждым проходом,
+так что тело может не выполниться ни разу.</p>
+<figure class="fig">
+<svg viewBox="0 0 520 150" width="130mm" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI" font-size="11">
+  <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7a5a3a"/></marker></defs>
+  <polygon points="120,20 200,60 120,100 40,60" fill="#fff6dc" stroke="#b8892a" stroke-width="1.2"/>
+  <text x="120" y="56" text-anchor="middle" font-family="Ponomar" font-size="14" fill="#000080">поку́да</text>
+  <text x="120" y="73" text-anchor="middle" font-family="Ponomar" font-size="12" fill="#14256b">условие</text>
+  <rect x="270" y="43" width="110" height="34" rx="5" fill="#fbf4e2" stroke="#7a5a3a"/>
+  <text x="325" y="65" text-anchor="middle">тело цикла</text>
+  <g stroke="#7a5a3a" stroke-width="1.3" fill="none" marker-end="url(#a3)">
+    <line x1="200" y1="60" x2="268" y2="60"/>
+    <path d="M325 43 V12 H120 V18"/>
+    <path d="M120 100 V130 H470"/>
+    <line x1="10" y1="60" x2="38" y2="60"/>
+  </g>
+  <text x="214" y="54" fill="#1a7d2a" font-size="10">истинно</text><text x="128" y="120" fill="#b3261e" font-size="10">ложно</text>
+  <text x="225" y="9" fill="#8a7d6f" font-size="9.5">снова к проверке</text>
+  <circle cx="480" cy="130" r="9" fill="#2a1f17"/><text x="480" y="134" text-anchor="middle" fill="#f1e3c0" font-size="9">далее</text>
+</svg>
+<figcaption><b>Рис. 5</b> Цикл <span class="cs">поку́да</span>: проверка, тело, снова проверка</figcaption>
+</figure>
+<pre class="az" title="ко́локолъ.азъ" run>ꙋда́ры є҆́сть 1
+поку́да ꙋда́ры не вѧ́щше 4:
+    глаго́ли «Бо́мъ!» * ꙋда́ры
+    ꙋда́ры += 1</pre>
+
+<h2 id="ch8-3" data-num="8.3"><span class="n">8.3</span>Обход: <span class="cs">для</span> … <span class="cs">во</span></h2>
+<p>Цикл <span class="cs">для</span> по очереди присваивает переменной каждый элемент последовательности и выполняет тело.
+Что считается элементами, зависит от вида значения после <span class="cs">во</span>:</p>
+<table class="compact">
+<thead><tr><th style="width:30%">После <span class="cs">во</span></th><th>Элементы</th></tr></thead>
+<tbody>
+<tr><td>свиток</td><td>его элементы по порядку</td></tr>
+<tr><td>словник</td><td>его ключи в порядке добавления</td></tr>
+<tr><td>слово</td><td>буквы (буква вместе с её ударениями и титлами — одна)</td></tr>
+<tr><td>целое число <span class="cs">н</span></td><td>числа 1, 2, …, <span class="cs">н</span></td></tr>
+<tr><td><az>чреда̀(а, б)</az></td><td>числа от <span class="cs">а</span> до <span class="cs">б</span> включительно, в том числе по убыванию</td></tr>
+</tbody>
+</table>
+<pre class="az" title="ѻ҆бхо́дъ.азъ" run>для ч во 3:                 глаго́ли «№», ч
+для ч во чреда̀(10, 8):      глаго́ли «ѿсчётъ», ч
+для бꙋ́ква во «А҆́зъ»:        глаго́ли «[» + бꙋ́ква + «]»
+для дн҃ь во {«понедѣ́льникъ»: 1, «вто́рникъ»: 2}: глаго́ли дн҃ь</pre>
+
+<h2 id="ch8-4" data-num="8.4"><span class="n">8.4</span><span class="cs">прерви</span> и <span class="cs">продолжи</span></h2>
+<p><span class="cs">прерви</span> немедленно выходит из ближайшего цикла, <span class="cs">продолжи</span> переходит к следующему проходу.
+Вне цикла оба слова — прегрешение.</p>
+<pre class="az" title="пе́рвое_кра́тное.азъ" run>для ч во чреда̀(1, 100):
+    а҆́ще ч % 2 є҆́сть 0:
+        продолжи                 # чётныя пропꙋска́емъ
+    а҆́ще ч % 7 є҆́сть 0:
+        глаго́ли «Пе́рвое нечётное кра́тное семѝ:», ч
+        прерви</pre>
+
+<h2 id="ch8-5" data-num="8.5"><span class="n">8.5</span>Короткая запись</h2>
+<p>Если тело блока — одно простое предложение, его можно написать в той же строке после двоеточия:</p>
+<pre class="az" nonum>а҆́ще х вѧ́щше 0: глаго́ли «положи́тельно»
+для ч во 3: глаго́ли ч</pre>
+
+<!-- ═══════════════════════════ 9. ФУНКЦИИ ═══════════════════════════ -->
+<h1 class="chapter" id="ch9" data-num="9"><span class="no">Глава 9 <span class="cs">ѳ҃</span></span>Функции</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Функция — именованный блок, который можно вызывать с разными доводами (аргументами). Функция объявляется
+словом <span class="cs">функці́ѧ</span> (или <span class="cs">дѣѧ́нїе</span>), возвращает значение словом
+<span class="cs">возвратѝ</span> и вызывается по имени со скобками.</p>
+<pre class="az" title="плѡ́щадь.азъ" run>функці́ѧ Пло́щадь (ширина̀, высота̀):
+    возвратѝ ширина̀ * высота̀
+
+глаго́ли «Пло́щадь хра́ма:», Пло́щадь(12, 30), «кв. саже́ней»</pre>
+<p>Имя функции по обычаю пишут с прописной буквы. «Скрипторїй» и это руководство выделяют первую букву
+киноварью, как буквицу в рукописи.</p>
+
+<h2 id="ch9-1" data-num="9.1"><span class="n">9.1</span>Доводы по умолчанию</h2>
+<p>У довода может быть значение по умолчанию, оно указывается через <span class="cs">є҆́сть</span> или <code>=</code>.
+Такие доводы можно не передавать при вызове. Значением по умолчанию может быть только простое значение:
+число, слово, <az>и҆сти́на</az>, <az>ло́жь</az> или <az>безвѣ́стно</az>. Вот функция с того самого мема — теперь она
+действительно работает:</p>
+<pre class="az" title="вѣ́ды.азъ" run>функці́ѧ Благовѣ́стъ (ѵ҆поста́сь, покаѧ́нїе є҆́сть ло́жь):
+    а, б, в сꙋ́ть цѣ̑лыѧ
+    славосло́въ же словни́къ
+    славосло́въ ѿ а҃ є҆́сть «Не бо́йсѧ, дщи сїѡ́нѧ»
+    славосло́въ ѿ в҃ є҆́сть «Прїи́де же і҆и҃съ»
+    славосло́въ ѿ г҃ є҆́сть «И҆зы́де же сло́во сїѐ»
+
+    а҆́ще покаѧ́нїе є҆́сть ло́жь а҆́бо ѵ҆поста́сь не є҆́сть безвѣ́стна:
+        а҆́ще славосло́въ ѿ ѵ҆поста́сь:
+            глаго́ли славосло́въ ѿ ѵ҆поста́сь
+    и҆на́ко:
+        а є҆́сть славосло́въ.сочта́ти()
+        б є҆́сть а҃
+        поку́да б не є҆́сть вѧ́щше а:
+            глаго́ли кириллицею(б) + «.», славосло́въ ѿ б
+            б є҆́сть б + а҃
+    возвратѝ А҆ми́нь
+
+Благовѣ́стъ(в҃)
+Благовѣ́стъ(безвѣ́стно, и҆сти́на)</pre>
+
+<h2 id="ch9-2" data-num="9.2"><span class="n">9.2</span>Возврат значения</h2>
+<p><span class="cs">возвратѝ</span> немедленно завершает функцию и передаёт значение вызвавшему.
+Функция, дошедшая до конца без <span class="cs">возвратѝ</span>, возвращает <az>безвѣ́стно</az>.
+Функции объявляются только в главном теле программы (не внутри других функций) и могут вызываться
+раньше, чем объявлены.</p>
+
+<h2 id="ch9-3" data-num="9.3"><span class="n">9.3</span>Рекурсия</h2>
+<p>Функция может вызывать саму себя. Программа выполняется в потоке с большим стеком, поэтому глубина
+рекурсии в тысячи вызовов не страшна. Бесконечная рекурсия завершается анафемой, а не молчаливым падением.</p>
+<pre class="az" title="факторіа́лъ.азъ" run>функці́ѧ Факторїа́лъ (н):
+    а҆́ще н не вѧ́щше 1:
+        возвратѝ 1
+    возвратѝ н * Факторїа́лъ(н - 1)
+
+функці́ѧ Фибона́ччи (н):
+    а҆́ще н менѣ́е 3: возвратѝ 1
+    возвратѝ Фибона́ччи(н - 1) + Фибона́ччи(н - 2)
+
+глаго́ли «10! =», Факторїа́лъ(10)
+для к во 10: рцы̀ к, Фибона́ччи(к)</pre>
+
+<h2 id="ch9-4" data-num="9.4"><span class="n">9.4</span>Вызов через точку</h2>
+<p>Запись <az>х.дѣ́йство(…)</az> означает то же, что <az>дѣ́йство(х, …)</az>: значение перед точкой становится
+первым доводом. Это удобно для встроенных действий над свитками и словами:</p>
+<pre class="az" title="то́чка.азъ" run>свѣ́чи є҆́сть [«ꙋ҆ спа́са», «ꙋ҆ бг҃оро́дицы»]
+свѣ́чи.приложи(«за ᲂу҆покое́нїе»)
+глаго́ли свѣ́чи.длина(), «свѣ́чи:», свѣ́чи.совокупи(«; »)</pre>
+
+<!-- ═══════════════════════════ 10. СВИТКИ И СЛОВНИКИ ═══════════════════════════ -->
+<h1 class="chapter" id="ch10" data-num="10"><span class="no">Глава 10 <span class="cs">і҃</span></span>Свитки и словники</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Свиток хранит значения по порядку, словник — по ключам. Оба вида изменяемы: элементы можно заменять
+и добавлять. Элемент берётся словом <span class="cs">ѿ</span> («от») или квадратными скобками.</p>
+
+<h2 id="ch10-1" data-num="10.1"><span class="n">10.1</span>Свитки</h2>
+<p><b>Счёт в свитках ведётся с единицы</b> — как и в кириллической цифири, где нуля нет.</p>
+<figure class="fig">
+<svg viewBox="0 0 560 120" width="140mm" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI" font-size="11">
+  <text x="14" y="70" font-family="Ponomar" font-size="16" fill="#14256b">сви́токъ</text>
+  <g font-family="Ponomar" font-size="15">
+    <rect x="100" y="48" width="96" height="36" fill="#fbf4e2" stroke="#7a5a3a"/><text x="148" y="72" text-anchor="middle" fill="#11801e">«а҆́зъ»</text>
+    <rect x="196" y="48" width="96" height="36" fill="#fbf4e2" stroke="#7a5a3a"/><text x="244" y="72" text-anchor="middle" fill="#11801e">«бꙋ́ки»</text>
+    <rect x="292" y="48" width="96" height="36" fill="#fbf4e2" stroke="#7a5a3a"/><text x="340" y="72" text-anchor="middle" fill="#11801e">«вѣ́ди»</text>
+    <rect x="400" y="48" width="96" height="36" fill="none" stroke="#b3261e" stroke-dasharray="4 3"/><text x="448" y="72" text-anchor="middle" fill="#b3261e" font-size="13">новый</text>
+    <text x="148" y="34" text-anchor="middle" fill="#c0201a">а҃</text><text x="244" y="34" text-anchor="middle" fill="#c0201a">в҃</text>
+    <text x="340" y="34" text-anchor="middle" fill="#c0201a">г҃</text><text x="448" y="34" text-anchor="middle" fill="#b3261e">д҃</text>
+  </g>
+  <text x="148" y="104" text-anchor="middle" fill="#6d6257" font-size="9.5">сви́токъ ѿ а҃</text>
+  <text x="340" y="104" text-anchor="middle" fill="#6d6257" font-size="9.5">сви́токъ[3]</text>
+  <text x="448" y="104" text-anchor="middle" fill="#b3261e" font-size="9.5">присвоение по №4 добавляет</text>
+  <text x="20" y="104" fill="#6d6257" font-size="9.5">нуля несть</text>
+</svg>
+<figcaption><b>Рис. 6</b> Номера элементов свитка начинаются с единицы; присваивание по номеру «длина + 1» добавляет элемент в конец</figcaption>
+</figure>
+<pre class="az" title="сви́токъ.азъ" run>а҆збꙋ́ка є҆́сть [«а҆́зъ», «бꙋ́ки», «вѣ́ди»]
+глаго́ли а҆збꙋ́ка ѿ а҃, а҆збꙋ́ка[3], длина(а҆збꙋ́ка)
+а҆збꙋ́ка ѿ д҃ є҆́сть «глаго́ль»          # №4 = длина+1: добавить
+приложи(а҆збꙋ́ка, «добро̀»)
+глаго́ли а҆збꙋ́ка
+глаго́ли «Изъя́то:», изъми(а҆збꙋ́ка), «ѡ҆ста́лось:», длина(а҆збꙋ́ка)
+глаго́ли имать(а҆збꙋ́ка, «бꙋ́ки»), имать(а҆збꙋ́ка, «ꙋ҆́къ»)</pre>
+<div class="warn"><span class="h">Внимание</span><p>Обращение к несуществующему номеру — анафема:
+<em>«указатель 0 внѣ свитка (длина 3). Помни: счётъ ѿ единицы, ибо нуля несть»</em>.</p></div>
+
+<h2 id="ch10-2" data-num="10.2"><span class="n">10.2</span>Словники</h2>
+<p>Словник сопоставляет ключам значения. Ключами могут быть слова, числа и истинности. Обращение к отсутствующему
+ключу <em>не</em> ошибка: оно возвращает <az>безвѣ́стно</az>. Присваивание по новому ключу добавляет запись.</p>
+<pre class="az" title="словни́къ.азъ" run>гла́съ є҆́сть {1: «Воскресе́нъ», 2: «Ѻ҆́тче на́шъ»}
+гла́съ ѿ 3 є҆́сть «Бцⷣе дв҃о»
+глаго́ли гла́съ
+глаго́ли гла́съ ѿ 2, гла́съ ѿ 8
+глаго́ли ключи(гла́съ), имать(гла́съ, 3), длина(гла́съ)
+для к во гла́съ: глаго́ли «гла́съ», кириллицею(к), «—», гла́съ ѿ к</pre>
+
+<!-- ═══════════════════════════ 11. ВВОД И ВЫВОД ═══════════════════════════ -->
+<h1 class="chapter" id="ch11" data-num="11"><span class="no">Глава 11 <span class="cs">а҃і</span></span>Ввод и вывод</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Программа общается с человеком через консоль: печатает словом <span class="cs">глаго́ли</span>
+и спрашивает действием <span class="cs">внемлѝ()</span>. Вся кириллица, включая надстрочные знаки, выводится
+и читается правильно.</p>
+<h2 id="ch11-1" data-num="11.1"><span class="n">11.1</span><span class="cs">глаго́ли</span></h2>
+<p>Вычисляет все перечисленные выражения слева направо и печатает их значения через пробел, затем переводит строку.
+<span class="cs">глаго́ли</span> без доводов печатает пустую строку. Слова печатаются как есть, свитки и словники —
+в квадратных и фигурных скобках, логические значения — словами <span class="cs">и҆сти́на</span> и <span class="cs">ло́жь</span>.</p>
+<h2 id="ch11-2" data-num="11.2"><span class="n">11.2</span><span class="cs">внемлѝ</span></h2>
+<p><az>внемлѝ()</az> читает строку с клавиатуры и возвращает её как слово. Если передать довод, он будет напечатан
+как приглашение (без перевода строки). Чтобы получить число, оберните результат в <az>число()</az>:</p>
+<pre class="az" title="сꙋ́мма.азъ" run stdin="12\n30\n">а є҆́сть число(внемлѝ(«Пе́рвое число̀: »))
+б є҆́сть число(внемлѝ(«Второ́е число̀: »))
+глаго́ли «Сꙋ́мма:», а + б, «=», кириллицею(а + б)</pre>
+
+<!-- ═══════════════════════════ 12. ОШИБКИ ═══════════════════════════ -->
+<h1 class="chapter" id="ch12" data-num="12"><span class="no">Глава 12 <span class="cs">в҃і</span></span>Прегрешения и анафема</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Ошибки бывают двух родов. <b>Прегрешение</b> — ошибка в тексте программы: транслятор находит её
+до компиляции и указывает строку и столбец. <b>Анафема</b> — ошибка во время выполнения: программа сообщает,
+что случилось и в какой строке, и завершается с кодом 1.</p>
+<h2 id="ch12-1" data-num="12.1"><span class="n">12.1</span>Прегрешения</h2>
+<p>Прегрешение выводится в формате <code>файл:строка:столбец: прегрѣшеніе: описание</code>. «Скрипторїй» подчёркивает
+ошибочное место волнистой линией прямо во время набора.</p>
+<pre class="az" title="ѻ҆шѝбка.азъ" error>а є҆́сть 1
+глаго́ли а + б</pre>
+<pre class="az" title="ѻ҆тстꙋ́пъ.азъ" error>а҆́ще и҆сти́на:
+глаго́ли «забы́лъ ѿстꙋ́пъ»</pre>
+<h2 id="ch12-2" data-num="12.2"><span class="n">12.2</span>Анафема</h2>
+<pre class="az" title="дѣле́нїе.азъ" run>глаго́ли «До дѣле́нїѧ»
+х є҆́сть 10 / 0
+глаго́ли «Сего̀ не ᲂу҆ви́димъ»</pre>
+<p>Программа может предать анафеме сама себя, если обнаружит недопустимое положение:</p>
+<pre class="az" title="постъ.азъ" run>покло́ны є҆́сть 99
+а҆́ще покло́ны вѧ́щше 40:
+    анаѳе́ма «Не прели́стисѧ: сꙋ́гꙋбїе ᲂу҆се́рдїѧ є҆́сть пре́лесть»
+глаго́ли покло́ны</pre>
+<h2 id="ch12-3" data-num="12.3"><span class="n">12.3</span>Коды завершения</h2>
+<table class="compact">
+<thead><tr><th style="width:16%">Код</th><th>Когда</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>программа дошла до конца или выполнила <az>возвратѝ</az> в главном теле без значения</td></tr>
+<tr><td><span class="cs">н</span></td><td><az>возвратѝ н</az> в главном теле, где <span class="cs">н</span> — целое</td></tr>
+<tr><td>1</td><td>анафема (ошибка выполнения или <az>анаѳе́ма</az>)</td></tr>
+<tr><td>2</td><td>внутренняя беда рантайма (сообщите о ней разработчикам)</td></tr>
+</tbody>
+</table>
+
+<!-- ═══════════════════════════ 13. СПРАВОЧНИК ═══════════════════════════ -->
+<h1 class="chapter" id="ch13" data-num="13"><span class="no">Глава 13 <span class="cs">г҃і</span></span>Встроенные действия</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Встроенные действия вызываются как обычные функции. Через слеш указаны равноправные имена.
+Необязательные доводы взяты в квадратные скобки.</p>
+<table>
+<thead><tr><th style="width:36%">Действие</th><th>Что делает</th></tr></thead>
+<tbody>
+<tr><td><az>длина(х)</az> / <span class="cs">мѣ́ра, сочтѝ, сочта́ти</span></td><td>число букв в слове, элементов в свитке или записей в словнике</td></tr>
+<tr><td><az>приложи(с, х)</az></td><td>добавляет <span class="cs">х</span> в конец свитка <span class="cs">с</span></td></tr>
+<tr><td><az>изъми(с)</az></td><td>удаляет и возвращает последний элемент свитка</td></tr>
+<tr><td><az>ключи(д)</az></td><td>свиток ключей словника</td></tr>
+<tr><td><az>имать(что, х)</az></td><td>есть ли ключ в словнике, элемент в свитке, подслово в слове</td></tr>
+<tr><td><az>чреда̀(а, [б])</az></td><td>свиток чисел от <span class="cs">а</span> до <span class="cs">б</span> включительно; с одним доводом — от 1 до <span class="cs">а</span></td></tr>
+<tr><td><az>число(х)</az> · <az>дробь(х)</az> · <az>сло́во(х)</az></td><td>преобразование в целое, дробное, слово</td></tr>
+<tr><td><az>вид(х)</az></td><td>название вида значения</td></tr>
+<tr><td><az>корень(х)</az> · <az>мерило(х)</az></td><td>квадратный корень · абсолютная величина</td></tr>
+<tr><td><az>жребій(а, б)</az></td><td>случайное целое от <span class="cs">а</span> до <span class="cs">б</span></td></tr>
+<tr><td><az>почі́й(мс)</az></td><td>пауза на заданное число миллисекунд</td></tr>
+<tr><td><az>вре́мѧ()</az></td><td>миллисекунды от начала работы программы</td></tr>
+<tr><td><az>раздѣли(слово, [раздѣлитель])</az></td><td>свиток частей слова; без раздѣлителя — по пробелам</td></tr>
+<tr><td><az>совокупи(свиток, [раздѣлитель])</az></td><td>склеивает свиток в слово</td></tr>
+<tr><td><az>внемлѝ([вопрос])</az></td><td>читает строку с клавиатуры</td></tr>
+<tr><td><az>кириллицею(н)</az> / <span class="cs">цифирью</span></td><td>число кириллической цифирью: 12 → <span class="cs">в҃і</span></td></tr>
+</tbody>
+</table>
+<pre class="az" title="дѣ́йства.азъ" run>глаго́ли раздѣли(«ѻ҆те́цъ сы́нъ дꙋ́хъ»)
+глаго́ли совокупи(раздѣли(«а,б,в», «,»), « · »)
+глаго́ли чреда̀(5), чреда̀(3, 1)
+глаго́ли имать(«Бл҃гослове́нъ», «слове́нъ»), сло́во(3.5) + «!»
+к є҆́сть жребій(1, 6)
+глаго́ли «кость въ предѣ́лахъ:», к не менѣ́е 1 и к не вѧ́щше 6</pre>
+
+<!-- ═══════════════════════════ 14. ПРИМЕРЫ ═══════════════════════════ -->
+<h1 class="chapter" id="ch14" data-num="14"><span class="no">Глава 14 <span class="cs">д҃і</span></span>Примеры программ</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Несколько законченных программ, которые показывают язык в деле. Все они есть в папке
+<code>examples\Адонаи</code>.</p>
+
+<h2 id="ch14-1" data-num="14.1"><span class="n">14.1</span>Пасхалия</h2>
+<p>Вычисление дня православной Пасхи по формуле Гаусса для юлианского календаря с переводом на гражданский стиль.
+Программа использует словники, функцию, возвращающую свиток, и обход чреды лет.</p>
+<pre class="az" title="пасхалїѧ.азъ" run># Пасха́лїѧ: дни́ пра́вославныѧ Па́схи (вѣ́рно для 1900–2099 лѣ́тъ).
+мѣ́сѧцы є҆́сть {3: «ма́рта», 4: «апрѣ́лѧ», 5: «ма́ѧ»}
+дни̑ є҆́сть {3: 31, 4: 30, 5: 31}
+
+функці́ѧ Па́сха (лѣ́то):
+    а є҆́сть лѣ́то % 4
+    б є҆́сть лѣ́то % 7
+    в є҆́сть лѣ́то % 19
+    д є҆́сть (19 * в + 15) % 30
+    е є҆́сть (2 * а + 4 * б - д + 34) % 7
+    мѣ́сѧцъ є҆́сть (д + е + 114) // 31
+    де́нь є҆́сть (д + е + 114) % 31 + 1 + 13   # ю҆лїа́нскїй → гражда́нскїй
+    а҆́ще де́нь вѧ́щше дни̑ ѿ мѣ́сѧцъ:
+        де́нь є҆́сть де́нь - дни̑ ѿ мѣ́сѧцъ
+        мѣ́сѧцъ є҆́сть мѣ́сѧцъ + 1
+    возвратѝ [де́нь, мѣ́сѧцъ]
+
+для лѣ́то во чреда̀(2025, 2030):
+    п є҆́сть Па́сха(лѣ́то)
+    глаго́ли лѣ́то, «(» + кириллицею(лѣ́то) + «):», п ѿ а҃, мѣ́сѧцы ѿ (п ѿ в҃)</pre>
+
+<h2 id="ch14-2" data-num="14.2"><span class="n">14.2</span>Трисвятое</h2>
+<p>Известная задача FizzBuzz в благочестивом изводе: на числа, кратные трём, программа отвечает «Свѧты́й»,
+на кратные пяти — «Крѣ́пкїй», а остальные числа пишет кириллической цифирью.</p>
+<pre class="az" title="трисвѧ́тое.азъ" run>для ч во чреда̀(1, 15):
+    сло́во є҆́сть «»
+    а҆́ще ч % 3 є҆́сть 0: сло́во += «Свѧты́й »
+    а҆́ще ч % 5 є҆́сть 0: сло́во += «Крѣ́пкїй »
+    а҆́ще сло́во є҆́сть «»: сло́во є҆́сть кириллицею(ч)
+    глаго́ли сло́во</pre>
+
+<h2 id="ch14-3" data-num="14.3"><span class="n">14.3</span>Решето Эратосфена</h2>
+<p>Поиск простых чисел: свиток отметок, вложенные циклы и сбор результата в свиток.</p>
+<pre class="az" title="решето̀.азъ" run>н є҆́сть 60
+просто́е є҆́сть []
+для к во н: приложи(просто́е, и҆сти́на)
+просто́е ѿ а҃ є҆́сть ло́жь
+к є҆́сть 2
+поку́да к * к не вѧ́щше н:
+    а҆́ще просто́е ѿ к:
+        м є҆́сть к * к
+        поку́да м не вѧ́щше н:
+            просто́е ѿ м є҆́сть ло́жь
+            м += к
+    к += 1
+итогъ є҆́сть []
+для к во н:
+    а҆́ще просто́е ѿ к: приложи(итогъ, кириллицею(к))
+глаго́ли «Просты́ѧ до», кириллицею(н) + «:»
+глаго́ли совокупи(итогъ, « »)</pre>
+
+<h2 id="ch14-4" data-num="14.4"><span class="n">14.4</span>Родословие</h2>
+<p>Кни́га родства̀ по Матфею: словник «отец → сын» и цикл, идущий по нему, пока есть продолжение.</p>
+<pre class="az" title="родословїе.азъ" run>родѝ є҆́сть {«Авраа́мъ»: «І҆саа́къ», «І҆саа́къ»: «І҆а́кѡвъ», «І҆а́кѡвъ»: «І҆ꙋ́да»,
+            «І҆ꙋ́да»: «Фаре́съ», «Фаре́съ»: «Е҆срѡ́мъ»}
+ро́дъ є҆́сть 1
+кто̀ є҆́сть «Авраа́мъ»
+поку́да и҆ма́ть(родѝ, кто̀):
+    глаго́ли кириллицею(ро́дъ) + «.», кто̀, «родѝ», родѝ ѿ кто̀
+    кто̀ є҆́сть родѝ ѿ кто̀
+    ро́дъ += 1</pre>
+
+<!-- ═══════════════════════════ 15. ИНСТРУМЕНТЫ ═══════════════════════════ -->
+<h1 class="chapter" id="ch15" data-num="15"><span class="no">Глава 15 <span class="cs">є҃і</span></span>Инструменты</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Программы на «Азѣ» собираются транслятором <code>az</code> из командной строки или в среде «Скрипторїй».
+Оба пользуются одним и тем же транслятором, поэтому результат одинаков.</p>
+
+<h2 id="ch15-1" data-num="15.1"><span class="n">15.1</span>Транслятор <code>az</code></h2>
+<table>
+<thead><tr><th style="width:42%">Команда</th><th>Действие</th></tr></thead>
+<tbody>
+<tr><td><code>az собери файл.азъ [-o имя.exe]</code></td><td>собрать исполняемый файл (по умолчанию рядом с исходником)</td></tr>
+<tr><td><code>az пусти файл.азъ [доводы…]</code></td><td>собрать во временную папку и запустить</td></tr>
+<tr><td><code>az провѣрь файл.азъ</code></td><td>только проверить на прегрешения, ничего не собирая</td></tr>
+<tr><td><code>az си файл.азъ</code></td><td>показать порождённый текст на C#</td></tr>
+<tr><td><code>az --version</code></td><td>версия языка</td></tr>
+</tbody>
+<caption>Команды понимают и латинские имена: <code>build</code>, <code>run</code>, <code>check</code>, <code>cs</code>.</caption>
+</table>
+<p>Порождённый C# читается легко: кириллические имена сохраняются, функции получают приставку <code>Ф_</code>,
+общие переменные — <code>Г_</code>. Вот что получается из программы «трисвятое»:</p>
+<pre class="plain">static void Тѣло()
+{
+    Az.Line = 1;
+    {
+        List&lt;object&gt; __обх1 = Az.Iter(Az.Range((object)1L, (object)15L));
+        for (int __и1 = 0; __и1 &lt; __обх1.Count; __и1++) {
+            Г_слово = __обх1[__и1];
+            Az.Line = 2;
+            Г_слово = (object)"";
+            Az.Line = 3;
+            if (Az.Truthy(Az.OpEq(Az.Mod(Г_ч, (object)3L), (object)0L))) {
+                …</pre>
+
+<h2 id="ch15-2" data-num="15.2"><span class="n">15.2</span>«Скрипторїй»</h2>
+<p>Среда разработки устроена по образцу классических IDE: слева древо проекта, в середине редактор с вкладками,
+внизу панель «Исход», наверху иконостас покровителей (щелчок по иконе открывает житие).
+Ошибки подсвечиваются прямо во время набора.</p>
+<table class="compact">
+<thead><tr><th style="width:30%">Клавиши</th><th>Действие</th></tr></thead>
+<tbody>
+<tr><td><b>Shift+F10</b></td><td>собрать и запустить, вывод — в панель «Исход»</td></tr>
+<tr><td><b>Ctrl+F9</b></td><td>собрать <code>.exe</code> в папку проекта <code>собрано\</code></td></tr>
+<tr><td><b>Ctrl+Shift+F10</b></td><td>запустить в отдельном окне консоли</td></tr>
+<tr><td><b>Ctrl+F2</b></td><td>остановить запущенную программу</td></tr>
+<tr><td><b>Ctrl+S</b> · <b>Ctrl+Shift+S</b></td><td>сохранить файл · сохранить все</td></tr>
+<tr><td><b>Ctrl+F</b> · <b>F3</b> · <b>Ctrl+H</b></td><td>поиск · следующее совпадение · замена</td></tr>
+<tr><td><b>Ctrl+G</b></td><td>перейти к строке</td></tr>
+<tr><td><b>Ctrl+/</b></td><td>закомментировать или раскомментировать строки</td></tr>
+<tr><td><b>Ctrl+=</b> · <b>Ctrl+−</b></td><td>крупнее · мельче шрифт</td></tr>
+<tr><td><b>Alt+1</b> · <b>Alt+4</b></td><td>скрыть или показать древо проекта · панель «Исход»</td></tr>
+<tr><td><b>F1</b></td><td>справка по синтаксису</td></tr>
+</tbody>
+</table>
+<div class="tip"><span class="h">Совет</span><p>Пункт меню «Кодъ → Показати C#-кодъ» открывает порождённый C# в отдельной вкладке.
+Так удобно разбираться, во что превращается каждая конструкция языка.</p></div>
+
+<!-- ═══════════════════════════ ПРИЛОЖЕНИЯ ═══════════════════════════ -->
+<h1 class="chapter" id="appA" data-num="А"><span class="no">Приложение А</span>Грамматика</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Ниже — грамматика языка в расширенной форме Бэкуса — Наура. Ключевые слова даны в нормализованном виде
+(глава 3), <code>NEWLINE</code>, <code>INDENT</code> и <code>DEDENT</code> — конец строки, увеличение и уменьшение отступа.</p>
+<pre class="plain">программа    = { предложение } ;
+предложение  = функция | условие | цикл_пока | цикл_для | простое NEWLINE ;
+блок         = ":" ( простое NEWLINE | NEWLINE INDENT { предложение } DEDENT ) ;
+
+функция      = "функция" ИМЯ "(" [ довод { "," довод } ] ")" блок ;
+довод        = ИМЯ [ ( "есть" | "=" ) простое_значение ] ;
+условие      = "аще" выражение блок { "иначе" "аще" выражение блок } [ "иначе" блок ] ;
+цикл_пока    = "покуда" выражение блок ;
+цикл_для     = "для" ИМЯ "во" выражение блок ;
+
+простое      = "возврати" [ выражение ] | "прерви" | "продолжи"
+             | "глаголи" [ выражение { "," выражение } ] | "анафема" выражение
+             | ИМЯ { "," ИМЯ } ( "суть" | "же" ) ВИД
+             | цель ( "есть" | "бысть" | "=" | "+=" | "-=" ) выражение
+             | выражение ;
+цель         = ИМЯ | постфикс ( "от" первичное | "[" выражение "]" ) ;
+
+выражение    = и_выр { ( "або" | "или" | "либо" ) и_выр } ;
+и_выр        = не_выр { "и" не_выр } ;
+не_выр       = "не" не_выр | сравнение ;
+сравнение    = сумма [ { "не" } [ "есть" ] { "не" } ( "вяще" | "менее" ) сумма
+                     | { "не" } "есть" { "не" } сумма
+                     | ( "==" | "!=" | "&lt;" | "&gt;" | "&lt;=" | "&gt;=" ) сумма ] ;
+сумма        = произв { ( "+" | "-" ) произв } ;
+произв       = унарное { ( "*" | "/" | "//" | "%" ) унарное } ;
+унарное      = ( "-" | "+" ) унарное | постфикс ;
+постфикс     = первичное { "(" доводы ")" | "[" выражение "]"
+                         | "от" первичное | "." ИМЯ "(" доводы ")" } ;
+первичное    = ЧИСЛО | СЛОВО | "истина" | "ложь" | "безвестно" | ИМЯ
+             | "(" выражение ")" | "[" доводы "]" | "{" [ пара { "," пара } ] "}" ;
+пара         = выражение ":" выражение ;</pre>
+
+<h1 class="chapter" id="appB" data-num="Б"><span class="no">Приложение Б</span>Шпаргалка</h1>
+<div class="cheat">
+<h3>Вывод и ввод</h3>
+<pre class="az" nonum>глаго́ли «Ми́ръ», 2026
+и҆́мѧ є҆́сть внемлѝ(«И҆́мѧ? »)
+н є҆́сть число(внемлѝ())</pre>
+<h3>Переменные</h3>
+<pre class="az" nonum>а є҆́сть 5          # или: бы́сть, =
+а += 1
+а, б сꙋ́ть цѣ̑лыѧ
+д же словни́къ</pre>
+<h3>Условие</h3>
+<pre class="az" nonum>а҆́ще х вѧ́щше 0:
+    глаго́ли «+»
+и҆на́че а҆́ще х є҆́сть 0:
+    глаго́ли «0»
+и҆на́че:
+    глаго́ли «−»</pre>
+<h3>Циклы</h3>
+<pre class="az" nonum>поку́да х менѣ́е 10:
+    х += 1
+для к во чреда̀(1, 10):
+    а҆́ще к % 2 є҆́сть 0: продолжи
+    а҆́ще к вѧ́щше 7: прерви</pre>
+<h3>Функции</h3>
+<pre class="az" nonum>функці́ѧ Сꙋ́мма (а, б є҆́сть 0):
+    возвратѝ а + б
+глаго́ли Сꙋ́мма(2, 3), Сꙋ́мма(7)</pre>
+<h3>Свитки и словники</h3>
+<pre class="az" nonum>с є҆́сть [«а», «б»]
+с ѿ а҃ є҆́сть «альфа»     # счётъ ѿ 1
+приложи(с, «в»)
+д є҆́сть {«ключъ»: 42}
+д ѿ «новый» є҆́сть 1
+для к во д: глаго́ли к, д ѿ к</pre>
+<h3>Сравнения</h3>
+<table class="compact"><tbody>
+<tr><td><az>є҆́сть</az> / <az>не є҆́сть</az></td><td><code>== !=</code></td></tr>
+<tr><td><az>вѧ́щше</az> / <az>менѣ́е</az></td><td><code>&gt; &lt;</code></td></tr>
+<tr><td><az>не вѧ́щше</az> / <az>не менѣ́е</az></td><td><code>&lt;= &gt;=</code></td></tr>
+<tr><td><az>и</az> · <az>а҆́бо</az> · <az>не</az></td><td><code>and or not</code></td></tr>
+</tbody></table>
+<h3>Значения</h3>
+<p><az>и҆сти́на</az> <az>ло́жь</az> <az>безвѣ́стно</az> <az>А҆ми́нь</az> · <az>а҃</az>=1 <az>і҃</az>=10 <az>р҃</az>=100 <az>҂а҃</az>=1000</p>
+<h3>Ошибки</h3>
+<pre class="az" nonum>анаѳе́ма «сообще́нїе»     # выходъ съ ко́домъ 1
+возвратѝ 3              # въ главномъ тѣлѣ: ко́дъ 3</pre>
+</div>
+
+<h1 class="chapter" id="appC" data-num="В"><span class="no">Приложение В</span>Покровители</h1>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="lead">Иконостас «Скрипторїя» составлен из святых, чьё служение ближе всего к ремеслу программиста:
+письму, переводу и передаче вестей. Официального «покровителя программистов» у Церкви нет.
+Это благочестивый выбор, а не каноническое установление.</p>
+<div class="icons">
+  <div class="ic"><img src="{{ICONS}}kirill-mefodiy.png"><div><div class="nm">Кѷрі́ллъ и҆ Мефо́дїй</div><div class="ds">Создатели славянской азбуки — первой «кодировки» для славян. Главные покровители языка. 24 мая.</div></div></div>
+  <div class="ic"><img src="{{ICONS}}ioann-bogoslov.jpg"><div><div class="nm">І҆ѡа́ннъ Бг҃осло́въ</div><div class="ds">«В начале было Слово». Покровитель всех, кто работает со словом. 21 мая, 9 октября.</div></div></div>
+  <div class="ic"><img src="{{ICONS}}nestor.jpg"><div><div class="nm">Не́сторъ Лѣтопи́сецъ</div><div class="ds">«Повесть временных лет» — первый журнал событий. Покровитель документации и логов. 9 ноября.</div></div></div>
+  <div class="ic"><img src="{{ICONS}}maksim-grek.jpg"><div><div class="nm">Макси́мъ Гре́къ</div><div class="ds">Переводчик и исправитель книг. Компилятор — тоже переводчик, а правка ошибок — код-ревью. 3 февраля.</div></div></div>
+  <div class="ic"><img src="{{ICONS}}stefan-permsky.jpg"><div><div class="nm">Стефа́нъ Пе́рмскїй</div><div class="ds">Создал азбуку для народа коми — покровитель авторов новых языков. 9 мая.</div></div></div>
+  <div class="ic"><img src="{{ICONS}}gavriil.jpg"><div><div class="nm">А҆рха́нгелъ Гаврїи́лъ</div><div class="ds">Вестник Благовещения: передача сообщений. На иконе — «Ангел Златые власы». 8 апреля, 26 июля.</div></div></div>
+  <div class="ic"><div class="ph">І҆сі́дѡръ<br>Севі́льскїй</div><div><div class="nm">І҆сі́дѡръ Севі́льскїй</div><div class="ds">Энциклопедист VII века, жил до разделения Церквей. Неофициально — «покровитель Интернета». 4 апреля.</div></div></div>
+  <div class="ic"><img src="{{ICONS}}troica.jpg"><div><div class="nm">Ст҃а́ѧ Тр҃ца</div><div class="ds">Икона прп. Андрея Рублёва. Перед всяким делом — «Царю Небесный».</div></div></div>
+  <div class="ic"><img src="{{ICONS}}bogorodica.jpg"><div><div class="nm">Бцⷣа Влади́мірскаѧ</div><div class="ds">Общее заступничество за трудящихся — особенно перед выпуском в пятницу.</div></div></div>
+</div>
+<div class="end">Слава Богу за всё.<small>Конец руководства.</small></div>
+
+</body>
+</html>

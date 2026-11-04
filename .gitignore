@@ -1,0 +1,28 @@
+# ── сборка .NET ──
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.idea/
+.vscode/
+TestResults/
+
+# ── то, что порождаютъ наши инструменты ──
+/dist/
+собрано/
+*.exe
+*.pdb
+docs/manual/.build/
+# руководство собирается заново (dotnet run --project tools/Manual) и прикладывается къ релизу
+docs/*.pdf
+
+# ── прототипъ на Python ──
+__pycache__/
+*.pyc
+
+# ── мѣстныя настройки ──
+.claude/
+Thumbs.db
+desktop.ini
+.DS_Store

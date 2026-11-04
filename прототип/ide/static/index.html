@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Скрипторїй</title>
+<link rel="icon" href="cross.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ponomar&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ide.css">
+</head>
+<body>
+<div id="app">
+  <!-- строка меню -->
+  <nav id="menubar"></nav>
+
+  <!-- иконостасъ -->
+  <div id="iconostasis"></div>
+
+  <!-- хлѣбныя крошки -->
+  <div id="breadcrumbs"></div>
+
+  <div id="workspace">
+    <div id="sidestrip"><div class="vtab active" data-panel="project">☦ 1: Проектъ</div></div>
+
+    <aside id="project">
+      <div class="panel-head">
+        <span class="ph-title"><span class="red">П</span>роектъ</span>
+        <span class="ph-tools">
+          <button title="Новый файлъ" data-act="newFile">✚</button>
+          <button title="Обновить древо" data-act="refreshTree">⟳</button>
+        </span>
+      </div>
+      <div id="tree"></div>
+    </aside>
+    <div class="splitter" id="split-left"></div>
+
+    <main id="editor-area">
+      <div id="tabs"></div>
+      <div id="slavkbd"></div>
+      <div id="editor-host">
+        <div id="welcome">
+          <div class="w-cross">☦</div>
+          <h1>Скрипторїй</h1>
+          <p>Среда́ для пи́санїѧ на ꙗ҆зы́цѣ <b>А҆́зъ</b>.</p>
+          <p class="hint">Избери́ фа́йлъ въ дре́вѣ проекта сле́ва.<br>
+            <kbd>Ctrl+S</kbd> — сохрани́ти · <kbd>Ctrl+F9</kbd> — собра́ти · <kbd>Shift+F10</kbd> — пꙋсти́ти</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="splitter-h" id="split-bottom"></div>
+  <section id="bottom">
+    <div class="panel-head">
+      <span class="ph-title">☦ Исхо́дъ</span>
+      <span class="ph-tools">
+        <button data-act="run" title="Пꙋсти́ти (Shift+F10)">▶ Пꙋсти́ти</button>
+        <button data-act="build" title="Собра́ти .exe (Ctrl+F9)">⚒ Собра́ти</button>
+        <button data-act="console" title="Пꙋсти́ти въ ѻ҆кнѣ̀ консо́ли">▣ Въ консо́ли</button>
+        <button data-act="clearOut" title="Ѡ҆чи́стити">✕</button>
+      </span>
+    </div>
+    <div id="bottom-body">
+      <pre id="output"></pre>
+      <div id="stdin-box">
+        <label>Вво́дъ для <i>внемлѝ()</i>:</label>
+        <textarea id="stdin" spellcheck="false" placeholder="по строкѣ на ка́ждый вопро́съ"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <footer id="status">
+    <span id="st-msg">Бл҃гослове́нъ гдⷭ҇ь.</span>
+    <span id="st-pos"></span>
+    <span>UTF-8</span>
+    <span id="st-lang">А҆́зъ</span>
+  </footer>
+</div>
+
+<div id="modal" hidden><div class="modal-box"><button class="modal-x" data-act="closeModal">✕</button><div id="modal-body"></div></div></div>
+<div id="dropdown" hidden></div>
+
+<script src="saints.js"></script>
+<script src="ide.js"></script>
+</body>
+</html>

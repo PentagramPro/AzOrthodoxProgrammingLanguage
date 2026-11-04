@@ -1,0 +1,167 @@
+@font-face { font-family: "Ponomar"; src: url("{{FONT}}") format("truetype"); }
+
+:root {
+  --ink: #1d1712;
+  --muted: #6d6257;
+  --cinnabar: #b3261e;
+  --gold: #b8892a;
+  --gold-l: #e9cf86;
+  --parch: #fbf7ec;
+  --rule: #d9cba6;
+  --code-bg: #fdfaf1;
+  --slav: "Ponomar", "Cambria", serif;
+  --serif: "Cambria", "Georgia", serif;
+  --sans: "Segoe UI", "Noto Sans", sans-serif;
+  --mono: "Consolas", "Cascadia Code", monospace;
+}
+
+@page {
+  size: A4;
+  margin: 21mm 19mm 22mm 21mm;
+  @top-left { content: "А҆́зъ"; font-family: "Ponomar"; font-size: 11pt; color: #b3261e; vertical-align: bottom; padding-bottom: 3mm; }
+  @top-right { content: "Руководство программиста"; font-family: "Cambria"; font-style: italic; font-size: 8.5pt; color: #8a7d6f; vertical-align: bottom; padding-bottom: 3mm; }
+  @bottom-center { content: "— " counter(page) " —"; font-family: "Cambria"; font-size: 9pt; color: #8b3a1e; }
+}
+@page cover { margin: 0; @top-left { content: none } @top-right { content: none } @bottom-center { content: none } }
+@page front { @top-left { content: none } @top-right { content: none } }
+
+html { font-family: var(--serif); font-size: 10.6pt; line-height: 1.52; color: var(--ink); }
+body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+p { margin: 0 0 2.6mm; text-align: left; orphans: 3; widows: 3; }
+a { color: inherit; text-decoration: none; }
+em { font-style: italic; }
+strong { font-weight: bold; }
+.cs { font-family: var(--slav); font-size: 1.12em; }
+.red { color: var(--cinnabar); }
+
+/* ---------- обложка ---------- */
+.cover { page: cover; width: 210mm; height: 297mm; position: relative; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 38%, #fffaf0 0%, #f6ecd2 60%, #ead8ad 100%); }
+.cover svg.frame { position: absolute; inset: 0; width: 210mm; height: 297mm; }
+.cover .inner { position: absolute; left: 0; right: 0; top: 62mm; text-align: center; }
+.cover .kicker { font-family: var(--sans); letter-spacing: .35em; font-size: 9pt; color: #8b3a1e; text-transform: uppercase; }
+.cover .title { font-family: var(--slav); font-size: 108pt; line-height: 1; color: var(--cinnabar); margin: 9mm 0 3mm; text-shadow: 0 .6mm 0 rgba(120,60,10,.18); }
+.cover .sub { font-family: var(--slav); font-size: 25pt; color: #3a2a1a; }
+.cover .sub2 { font-size: 12.5pt; color: var(--muted); margin-top: 4mm; font-style: italic; }
+.cover .cross { margin: 14mm auto 0; width: 26mm; }
+.cover .bottom { position: absolute; left: 0; right: 0; bottom: 30mm; text-align: center; font-family: var(--sans); font-size: 9pt; color: #6b4a2a; letter-spacing: .12em; }
+.cover .bottom b { font-family: var(--slav); font-size: 15pt; letter-spacing: 0; color: #8b3a1e; font-weight: normal; }
+
+/* ---------- титульныя страницы ---------- */
+.front { page: front; break-before: page; }
+.imprint { margin-top: 150mm; font-size: 9pt; color: var(--muted); }
+.imprint p { text-align: left; margin-bottom: 1.6mm; }
+.epigraph { margin: 8mm 0 12mm 60mm; font-style: italic; color: #4b3e32; }
+.epigraph .cs { font-style: normal; font-size: 15pt; color: var(--cinnabar); display: block; margin-bottom: 2mm; }
+.epigraph .src { display: block; text-align: right; font-size: 9pt; color: var(--muted); margin-top: 2mm; }
+
+/* ---------- оглавленіе ---------- */
+h1.toc-title { font-family: var(--slav); font-weight: normal; color: var(--cinnabar); font-size: 28pt; margin: 0 0 8mm; text-align: center; }
+ol.toc { list-style: none; padding: 0; margin: 0; }
+ol.toc li a { display: flex; align-items: baseline; gap: 2mm; }
+ol.toc li.l1 { margin-top: 3.2mm; font-weight: bold; font-size: 11pt; }
+ol.toc li.l2 { margin-left: 10mm; font-size: 9.8pt; margin-top: .6mm; }
+ol.toc .tn { min-width: 9mm; color: var(--cinnabar); font-family: var(--sans); font-size: .85em; font-weight: 600; }
+ol.toc li.l2 .tn { min-width: 11mm; color: #9a6b4a; font-weight: normal; }
+ol.toc .dots { flex: 1; border-bottom: 1px dotted #b9a882; transform: translateY(-1.2mm); }
+ol.toc .pg { font-family: var(--serif); min-width: 7mm; text-align: right; font-weight: normal; }
+
+/* ---------- главы ---------- */
+h1.chapter { break-before: page; font-family: var(--slav); font-weight: normal; font-size: 30pt; line-height: 1.1;
+  color: var(--cinnabar); margin: 6mm 0 2mm; padding-bottom: 5mm; border-bottom: 1.2pt solid var(--gold); position: relative; }
+h1.chapter .no { display: block; font-family: var(--sans); font-size: 9pt; letter-spacing: .32em; color: #8b6a3a; text-transform: uppercase; margin-bottom: 3mm; }
+h1.chapter .no .cs { font-family: var(--slav); letter-spacing: 0; font-size: 13pt; color: var(--cinnabar); text-transform: none; margin-left: 2mm; }
+h1.chapter + .ornament { text-align: center; color: var(--gold); margin: 1mm 0 6mm; font-size: 12pt; letter-spacing: .6em; }
+.lead::first-letter { font-family: var(--slav); float: left; font-size: 46pt; line-height: .9; color: var(--cinnabar); padding: 1.5mm 2.2mm 0 0; }
+.lead { font-size: 11.2pt; }
+h2 { font-family: var(--serif); font-size: 14pt; color: #5a1e12; margin: 7mm 0 2.5mm; break-after: avoid; font-weight: bold; }
+h2 .n { color: var(--cinnabar); font-family: var(--sans); font-size: 11pt; font-weight: 600; margin-right: 2.5mm; }
+h3 { font-family: var(--serif); font-size: 11.5pt; color: #3a2a1a; margin: 5mm 0 1.5mm; break-after: avoid; font-style: italic; font-weight: bold; }
+ul, ol { margin: 0 0 2.6mm; padding-left: 6mm; }
+li { margin-bottom: .8mm; }
+li::marker { color: var(--cinnabar); }
+
+/* ---------- кодъ ---------- */
+code { font-family: var(--mono); font-size: .9em; background: #f4ecd8; padding: .1mm 1mm; border-radius: 1mm; }
+code.az { font-family: var(--slav); font-size: 1.1em; background: #f7f0de; padding: 0 1.2mm; color: #14256b; white-space: nowrap; }
+figure.code { margin: 3mm 0 4.5mm; break-inside: avoid; border: .4pt solid var(--rule); border-left: 2.2pt solid var(--gold); border-radius: 1.2mm; background: var(--code-bg); overflow: hidden; }
+figure.code figcaption { font-family: var(--sans); font-size: 7.8pt; color: #7a5a3a; background: #f3e8cb; padding: 1mm 3mm; border-bottom: .4pt solid var(--rule); letter-spacing: .03em; }
+figure.code figcaption .file { color: var(--cinnabar); margin-right: 1.5mm; font-family: "Segoe UI Symbol"; }
+pre { margin: 0; white-space: pre-wrap; }
+pre.src { padding: 2.2mm 3mm 2.4mm 0; font-family: var(--slav); font-size: 12.2pt; line-height: 1.42; color: #14256b; }
+pre.src .ln { display: inline-block; width: 9mm; padding-right: 3mm; text-align: right; color: #b7a98d; font-family: var(--mono); font-size: 7.5pt; user-select: none; }
+pre.src code { background: none; padding: 0; font: inherit; }
+.k { color: #000080; } .d { color: #000; } .f { color: #000; } .f .buk { color: var(--cinnabar); }
+.o { color: #1a3cc8; } .c { color: #7a1fa2; } .t { color: #1a7d2a; } .b { color: #0d6e86; }
+.s { color: #11801e; } .n { color: #c0201a; } .m { color: #8a8a8a; }
+.out { background: #2a1f17; color: #f1e3c0; border-top: .4pt solid #4a3a2c; }
+.out .out-h { font-family: var(--sans); font-size: 7pt; letter-spacing: .14em; text-transform: uppercase; color: #c9a45a; padding: 1.2mm 3mm 0; }
+.out .out-h .stdin { text-transform: none; letter-spacing: 0; color: #a99a80; margin-left: 3mm; font-style: italic; }
+.out pre { font-family: var(--slav); font-size: 11.4pt; line-height: 1.38; padding: .8mm 3mm 2.4mm 12mm; }
+.out pre .e, .out.err pre { color: #ff9c8a; }
+pre.plain { background: #f6f1e4; border: .4pt solid var(--rule); border-radius: 1.2mm; padding: 2.4mm 4mm; font-family: var(--mono); font-size: 8.8pt; line-height: 1.45; margin: 3mm 0 4mm; break-inside: avoid; color: #2b2b2b; }
+pre.plain .p { color: #8b3a1e; user-select: none; }
+pre.plain .cm { color: #8a8a8a; }
+
+/* ---------- таблицы ---------- */
+table { border-collapse: collapse; width: 100%; margin: 3mm 0 4.5mm; font-size: 9.6pt; break-inside: auto; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { font-family: var(--sans); font-size: 7.8pt; letter-spacing: .06em; text-transform: uppercase; color: #6b4a2a; text-align: left;
+  border-top: 1.1pt solid #7a5a3a; border-bottom: .6pt solid #7a5a3a; padding: 1.4mm 2mm; font-weight: 600; }
+td { border-bottom: .3pt solid #e4d9bd; padding: 1.2mm 2mm; vertical-align: top; }
+tbody tr:last-child td { border-bottom: 1.1pt solid #7a5a3a; }
+td .cs, td code.az { font-size: 1.12em; }
+table.compact td { padding: .7mm 2mm; }
+caption { caption-side: bottom; font-size: 8.4pt; color: var(--muted); font-style: italic; text-align: left; padding-top: 1.5mm; }
+
+/* ---------- врѣзки ---------- */
+.note, .warn, .tip { break-inside: avoid; border-radius: 1.2mm; padding: 2.4mm 4mm 2.4mm 13mm; margin: 3.5mm 0 4.5mm; position: relative; font-size: 9.9pt; }
+.note { background: #f4efe1; border-left: 2.2pt solid var(--gold); }
+.warn { background: #fbecea; border-left: 2.2pt solid var(--cinnabar); }
+.tip { background: #eef3e8; border-left: 2.2pt solid #5f8a3a; }
+.note::before, .warn::before, .tip::before { position: absolute; left: 3.5mm; top: 1.6mm; font-family: var(--slav); font-size: 17pt; line-height: 1; }
+.note::before { content: "☦"; color: var(--gold); font-family: "Segoe UI Symbol"; font-size: 14pt; top: 2.2mm; }
+.warn::before { content: "!"; color: var(--cinnabar); font-family: var(--sans); font-weight: bold; font-size: 15pt; left: 5mm; }
+.tip::before { content: "✓"; color: #5f8a3a; font-family: "Segoe UI Symbol"; font-size: 13pt; top: 2.2mm; }
+.note .h, .warn .h, .tip .h { font-family: var(--sans); font-size: 7.6pt; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: .6mm; }
+.note .h { color: #8b6a2a; } .warn .h { color: var(--cinnabar); } .tip .h { color: #4d7a2a; }
+.note p:last-child, .warn p:last-child, .tip p:last-child { margin-bottom: 0; }
+
+/* ---------- рисунки ---------- */
+figure.fig { margin: 4mm 0 5mm; text-align: center; break-inside: avoid; }
+figure.fig svg, figure.fig img { max-width: 100%; }
+figure.fig img { border: .4pt solid #c9b88f; border-radius: 1mm; box-shadow: 0 .8mm 2.4mm rgba(80,50,20,.18); }
+figure.fig figcaption { font-size: 8.6pt; color: var(--muted); font-style: italic; margin-top: 2mm; }
+figure.fig figcaption b { font-style: normal; color: #6b4a2a; font-family: var(--sans); font-size: 7.6pt; letter-spacing: .08em; text-transform: uppercase; margin-right: 1.5mm; }
+
+/* ---------- цифирь ---------- */
+.numgrid { display: grid; break-inside: avoid; page-break-inside: avoid; grid-template-columns: repeat(9, 1fr); gap: 1.2mm; margin: 3mm 0 4mm; break-inside: avoid; }
+.numgrid div { background: #f7f0de; border: .4pt solid var(--rule); border-radius: 1mm; text-align: center; padding: 1mm 0 .8mm; }
+.numgrid .l { font-family: var(--slav); font-size: 17pt; color: var(--cinnabar); line-height: 1.1; display: block; }
+.numgrid .v { font-family: var(--sans); font-size: 7.6pt; color: #5a4a3a; }
+
+/* ---------- шпаргалка ---------- */
+.cheat { columns: 2; column-gap: 7mm; font-size: 8.8pt; }
+.cheat h3 { margin-top: 2.5mm; font-size: 9.6pt; color: var(--cinnabar); font-style: normal; break-after: avoid; }
+.cheat pre.src { font-size: 10.4pt; padding: 1.4mm 2mm; line-height: 1.32; }
+.cheat figure.code { margin: 1mm 0 2.4mm; }
+.cheat table { font-size: 8.4pt; margin: 1mm 0 2mm; }
+.cheat p { text-align: left; margin-bottom: 1.4mm; }
+
+/* ---------- иконы ---------- */
+.icons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm 6mm; margin-top: 5mm; }
+.icons .ic { break-inside: avoid; display: flex; gap: 3.5mm; align-items: flex-start; }
+.icons img { width: 20mm; height: 25mm; object-fit: cover; object-position: top; border: 1.2pt solid #7a2a17; border-radius: .8mm; box-shadow: 0 .6mm 1.6mm rgba(0,0,0,.25); flex: none; }
+.icons .ph { width: 20mm; height: 25mm; flex: none; border: 1.2pt solid #7a2a17; border-radius: .8mm; background: linear-gradient(135deg,#f6dd7a,#d8ae3c 40%,#b8892a 70%,#e9c75c); display: flex; align-items: center; justify-content: center; font-family: var(--slav); color: var(--cinnabar); font-size: 10pt; text-align: center; }
+.icons .nm { font-family: var(--slav); font-size: 12pt; color: var(--cinnabar); line-height: 1.15; }
+.icons .ds { font-size: 8.4pt; color: #4b3e32; line-height: 1.35; margin-top: .8mm; text-align: left; }
+
+.end { text-align: center; margin-top: 18mm; font-family: var(--slav); color: var(--cinnabar); font-size: 18pt; }
+.end small { display: block; font-family: var(--serif); font-size: 9pt; color: var(--muted); font-style: italic; margin-top: 2mm; }
+.keep { break-inside: avoid; }
+.pb { break-before: page; }
+
+/* не оставлять заголовокъ и вводную фразу оторванными отъ примѣра */
+h2 + p, h3 + p { break-after: avoid; }
+p:has(+ figure.code), p:has(+ figure.fig), p:has(+ table) { break-after: avoid; }

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Skriptorij</AssemblyName>
+    <RootNamespace>Skriptorij</RootNamespace>
+    <ApplicationIcon>Assets\cross.ico</ApplicationIcon>
+    <Product>Скрипторїй</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Az.Compiler\Az.Compiler.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Fonts\Ponomar-Regular.ttf" />
+    <Resource Include="Assets\Icons\*.jpg;Assets\Icons\*.png" />
+    <Resource Include="Assets\cross.ico" />
+    <EmbeddedResource Include="..\..\docs\синтаксисъ.md" LogicalName="docs.syntax.md" />
+    <EmbeddedResource Include="Assets\saints.json" LogicalName="saints.json" />
+    <None Include="Assets\Fonts\OFL.txt;Assets\Icons\CREDITS.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

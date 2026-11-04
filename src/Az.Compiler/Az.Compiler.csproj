@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Az.Compiler</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Рантаймъ не компилируется здѣсь: онъ вкладывается какъ исходникъ
+         и собирается вмѣстѣ съ каждой программой встроеннымъ csc.exe (C# 5). -->
+    <Compile Remove="Runtime\**" />
+    <EmbeddedResource Include="Runtime\AzRuntime.cs" LogicalName="Az.Compiler.Runtime.AzRuntime.cs" />
+  </ItemGroup>
+
+</Project>

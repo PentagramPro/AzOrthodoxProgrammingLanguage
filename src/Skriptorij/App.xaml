@@ -1,0 +1,41 @@
+﻿<Application x:Class="Skriptorij.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <FontFamily x:Key="Slav">pack://application:,,,/Assets/Fonts/#Ponomar, Times New Roman</FontFamily>
+        <SolidColorBrush x:Key="Cinnabar" Color="#C0201A"/>
+        <SolidColorBrush x:Key="Gold" Color="#C9A227"/>
+        <SolidColorBrush x:Key="PanelBorder" Color="#C5C5C5"/>
+        <LinearGradientBrush x:Key="HeadBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#F8F8F8" Offset="0"/>
+            <GradientStop Color="#E8E8E8" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="GoldLeaf" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#F6DD7A" Offset="0"/>
+            <GradientStop Color="#D8AE3C" Offset="0.4"/>
+            <GradientStop Color="#B8892A" Offset="0.7"/>
+            <GradientStop Color="#E9C75C" Offset="1"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="ToolBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Padding" Value="6,0"/>
+            <Setter Property="Margin" Value="1,0"/>
+            <Setter Property="FontFamily" Value="{StaticResource Slav}"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="KbdBtn" TargetType="Button">
+            <Setter Property="MinWidth" Value="26"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Padding" Value="4,0"/>
+            <Setter Property="Background" Value="#FFFDF5"/>
+            <Setter Property="BorderBrush" Value="#D8CAA4"/>
+            <Setter Property="FontFamily" Value="{StaticResource Slav}"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Focusable" Value="False"/>
+        </Style>
+    </Application.Resources>
+</Application>

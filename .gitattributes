@@ -1,0 +1,11 @@
+# Тексты храним съ LF; пакетные файлы Windows — съ CRLF
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.sln text eol=crlf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.ttf binary
+*.pdf binary
